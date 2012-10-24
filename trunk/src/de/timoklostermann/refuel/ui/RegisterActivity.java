@@ -17,7 +17,6 @@ import android.widget.TextView;
  
 public class RegisterActivity extends Activity {
     Button btnRegister;
-    Button btnLinkToLogin;
     EditText inputFullName;
     EditText inputEmail;
     EditText inputPassword;
@@ -42,7 +41,6 @@ public class RegisterActivity extends Activity {
         inputEmail = (EditText) findViewById(R.id.registerEmail);
         inputPassword = (EditText) findViewById(R.id.registerPassword);
         btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
         registerErrorMsg = (TextView) findViewById(R.id.register_error);
  
         // Register Button Click event
@@ -83,18 +81,6 @@ public class RegisterActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-        });
- 
-        // Link to Login Screen
-        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
- 
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
-                startActivity(i);
-                // Close Registration View
-                finish();
             }
         });
     }
