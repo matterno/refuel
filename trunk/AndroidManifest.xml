@@ -36,7 +36,7 @@
             android:label="Register New Account" >
         </activity>
         <activity
-            android:name=".FillingActivity"
+            android:name=".ui.SwipeActivity"
             android:label="@string/title_activity_filling" />
     </application>
 </manifest>
