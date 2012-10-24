@@ -1,5 +1,11 @@
-package de.timoklostermann.refuel;
+package de.timoklostermann.refuel.ui;
 
+import de.timoklostermann.refuel.R;
+import de.timoklostermann.refuel.R.id;
+import de.timoklostermann.refuel.R.layout;
+import de.timoklostermann.refuel.R.menu;
+import de.timoklostermann.refuel.R.string;
+import de.timoklostermann.refuel.ui.fragments.FillingFragment;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -18,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FillingActivity extends FragmentActivity {
+public class SwipeActivity extends FragmentActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -69,10 +75,7 @@ public class FillingActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new DummySectionFragment();
-            Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);
+            Fragment fragment = new FillingFragment();
             return fragment;
         }
 
@@ -89,26 +92,6 @@ public class FillingActivity extends FragmentActivity {
                 case 2: return getString(R.string.title_section3).toUpperCase();
             }
             return null;
-        }
-    }
-
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-    public static class DummySectionFragment extends Fragment {
-        public DummySectionFragment() {
-        }
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            TextView textView = new TextView(getActivity());
-            textView.setGravity(Gravity.CENTER);
-            Bundle args = getArguments();
-            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-            return textView;
         }
     }
 }
