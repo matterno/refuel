@@ -8,6 +8,9 @@
 package de.timoklostermann.refuel;
 
 public final class R {
+    public static final class array {
+        public static final int country_arrays=0x7f050000;
+    }
     public static final class attr {
     }
     public static final class drawable {
@@ -15,42 +18,69 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int btnLinkToRegisterScreen=0x7f070007;
-        public static final int btnLogin=0x7f070006;
-        public static final int btnLogout=0x7f070000;
-        public static final int btnRegister=0x7f07000c;
-        public static final int loginEmail=0x7f070003;
-        public static final int loginPassword=0x7f070004;
-        public static final int login_error=0x7f070005;
-        public static final int menu_settings=0x7f07000d;
-        public static final int pager=0x7f070001;
-        public static final int pager_title_strip=0x7f070002;
-        public static final int registerEmail=0x7f070009;
-        public static final int registerName=0x7f070008;
-        public static final int registerPassword=0x7f07000a;
-        public static final int register_error=0x7f07000b;
+        public static final int Spinner01=0x7f080019;
+        public static final int Spinner02=0x7f080017;
+        public static final int Spinner03=0x7f080018;
+        public static final int Spinner04=0x7f08001a;
+        public static final int TextView01=0x7f080011;
+        public static final int btn_fragment_vehicle_save=0x7f08001b;
+        public static final int btn_login_login=0x7f080004;
+        public static final int btn_register_register=0x7f08000b;
+        public static final int cb_login_remember=0x7f080002;
+        public static final int editText1=0x7f080012;
+        public static final int editText2=0x7f080013;
+        public static final int editText3=0x7f080014;
+        public static final int editText4=0x7f080015;
+        public static final int edt_login_email=0x7f080000;
+        public static final int edt_login_password=0x7f080001;
+        public static final int edt_register_email=0x7f080007;
+        public static final int edt_register_name=0x7f080006;
+        public static final int edt_register_password=0x7f080008;
+        public static final int edt_register_password_repeat=0x7f080009;
+        public static final int menu_addVehicle=0x7f08001f;
+        public static final int menu_changeVehicle=0x7f08001e;
+        public static final int menu_clear=0x7f08001d;
+        public static final int menu_register=0x7f08001c;
+        public static final int newVehicle=0x7f080005;
+        public static final int pager=0x7f08000c;
+        public static final int pager_title_strip=0x7f08000d;
+        public static final int register_error=0x7f08000a;
+        public static final int spinner1=0x7f080016;
+        public static final int textView1=0x7f08000e;
+        public static final int textView2=0x7f080010;
+        public static final int textView3=0x7f08000f;
+        public static final int tv_login_error=0x7f080003;
     }
     public static final class layout {
-        public static final int activity_dashboard=0x7f030000;
-        public static final int activity_filling=0x7f030001;
-        public static final int activity_login=0x7f030002;
-        public static final int activity_register=0x7f030003;
+        public static final int activity_login=0x7f030000;
+        public static final int activity_new_vehicle=0x7f030001;
+        public static final int activity_register=0x7f030002;
+        public static final int activity_swipe=0x7f030003;
+        public static final int activity_vehicle=0x7f030004;
+        public static final int fragment_statistics=0x7f030005;
+        public static final int fragment_vehicle=0x7f030006;
     }
     public static final class menu {
-        public static final int activity_filling=0x7f060000;
-        public static final int activity_main=0x7f060001;
+        public static final int activity_login=0x7f070000;
+        public static final int activity_register=0x7f070001;
+        public static final int activity_swipe=0x7f070002;
+        public static final int activity_vehicle=0x7f070003;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int hello_world=0x7f040001;
-        public static final int menu_settings=0x7f040002;
-        public static final int title_activity_filling=0x7f040007;
-        public static final int title_activity_main=0x7f040003;
-        public static final int title_section1=0x7f040006;
-        public static final int title_section2=0x7f040005;
-        public static final int title_section3=0x7f040004;
+        public static final int hello_world=0x7f04000b;
+        public static final int menu_add=0x7f04000a;
+        public static final int menu_changeCar=0x7f040008;
+        public static final int menu_clearInput=0x7f040006;
+        public static final int menu_register=0x7f040007;
+        public static final int menu_settings=0x7f040009;
+        public static final int title_activity_new_vehicle=0x7f040005;
+        public static final int title_activity_vehicle=0x7f040004;
+        public static final int title_fragment_filling=0x7f040003;
+        public static final int title_fragment_statistics=0x7f040002;
+        public static final int title_fragment_vehicle=0x7f040001;
     }
     public static final class style {
-        public static final int AppTheme=0x7f050000;
+        public static final int AppTheme=0x7f060000;
     }
 }
