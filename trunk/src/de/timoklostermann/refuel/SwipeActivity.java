@@ -1,28 +1,17 @@
-package de.timoklostermann.refuel.ui;
+package de.timoklostermann.refuel;
 
-import de.timoklostermann.refuel.R;
-import de.timoklostermann.refuel.R.id;
-import de.timoklostermann.refuel.R.layout;
-import de.timoklostermann.refuel.R.menu;
-import de.timoklostermann.refuel.R.string;
-import de.timoklostermann.refuel.ui.fragments.FillingFragment;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.content.Context;
+import de.timoklostermann.refuel.fragments.FillingFragment;
+import de.timoklostermann.refuel.fragments.StatisticsFragment;
+import de.timoklostermann.refuel.fragments.VehicleFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class SwipeActivity extends FragmentActivity {
 
@@ -42,7 +31,7 @@ public class SwipeActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filling);
+        setContentView(R.layout.activity_swipe);
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -51,12 +40,11 @@ public class SwipeActivity extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_filling, menu);
+        getMenuInflater().inflate(R.menu.activity_swipe, menu);
         return true;
     }
 
@@ -75,8 +63,14 @@ public class SwipeActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new FillingFragment();
-            return fragment;
+        	switch(i) {
+        	case 0: return new FillingFragment();
+        	case 1: return new StatisticsFragment();
+        	case 2: return new VehicleFragment();
+        	default: return null;
+        	}
+        	
+
         }
 
         @Override
@@ -87,11 +81,21 @@ public class SwipeActivity extends FragmentActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0: return getString(R.string.title_section1).toUpperCase();
-                case 1: return getString(R.string.title_section2).toUpperCase();
-                case 2: return getString(R.string.title_section3).toUpperCase();
+                case 0: return getString(R.string.title_fragment_filling).toUpperCase();
+                case 1: return getString(R.string.title_fragment_statistics).toUpperCase();
+                case 2: return getString(R.string.title_fragment_vehicle).toUpperCase();
             }
             return null;
         }
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.menu_changeVehicle:
+    		Intent intent = new Intent(this, VehicleActivity.class);
+    		startActivity(intent);
+    	}
+    	return super.onOptionsItemSelected(item);
     }
 }
