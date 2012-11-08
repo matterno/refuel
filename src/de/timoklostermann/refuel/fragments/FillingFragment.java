@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 public class FillingFragment extends ListFragment {
 	
+	//TODO reale Daten
 	Filling[] testData = new Filling[] {new Filling("01.01.2012","7,9 l/100km","1,59 €/l", "37 l"), new Filling("02.02.2012","7,6 l/100km","1,63 €/l", "13 l")};
 
     @Override

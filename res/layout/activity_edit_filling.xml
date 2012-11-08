@@ -25,7 +25,7 @@
         android:layout_alignRight="@+id/half_screen_helper"
         android:layout_below="@+id/tv_edit_filling_fillupInformation"
         android:hint="@string/edit_filling_edt_price"
-        android:inputType="number" >
+        android:inputType="numberDecimal" >
 
         <requestFocus />
     </EditText>
@@ -38,7 +38,7 @@
         android:layout_below="@+id/tv_edit_filling_fillupInformation"
         android:layout_toRightOf="@+id/edt_edit_filling_price"
         android:hint="@string/edit_filling_edt_quantity"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/edt_edit_filling_distance"
@@ -48,7 +48,7 @@
         android:layout_alignRight="@+id/half_screen_helper"
         android:layout_below="@+id/edt_edit_filling_quantity"
         android:hint="@string/edit_filling_edt_distance"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <Button
         android:id="@+id/btn_new_filling_date"
@@ -79,9 +79,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/sp_edit_filling_fuelType"
         android:layout_alignRight="@+id/half_screen_helper"
         android:layout_below="@+id/tv_edit_filling_extraData"
-        android:text="@string/edit_filling_tv_fuelType" />
+        android:text="@string/edit_filling_tv_fuelType"
+        android:gravity="center_vertical" />
 
     <Spinner
         android:id="@+id/sp_edit_filling_fuelType"
@@ -101,10 +103,5 @@
         android:hint="@string/edit_filling_edt_comment"
         android:inputType="text" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/btn_new_filling_save"
-        android:layout_below="@+id/edt_edit_filling_comment" />
 
 </RelativeLayout>

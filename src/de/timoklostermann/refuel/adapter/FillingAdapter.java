@@ -1,7 +1,5 @@
 package de.timoklostermann.refuel.adapter;
 
-import java.util.List;
-
 import de.timoklostermann.refuel.R;
 import android.content.Context;
 import android.view.LayoutInflater;
