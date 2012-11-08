@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View
+        android:id="@+id/half_screen_helper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_edit_filling_fillupInformation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/edit_filling_tv_information" />
+
+    <EditText
+        android:id="@+id/edt_edit_filling_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/half_screen_helper"
+        android:layout_below="@+id/tv_edit_filling_fillupInformation"
+        android:hint="@string/edit_filling_edt_price"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/edt_edit_filling_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_edit_filling_fillupInformation"
+        android:layout_toRightOf="@+id/edt_edit_filling_price"
+        android:hint="@string/edit_filling_edt_quantity"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edt_edit_filling_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/half_screen_helper"
+        android:layout_below="@+id/edt_edit_filling_quantity"
+        android:hint="@string/edit_filling_edt_distance"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btn_new_filling_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/edt_edit_filling_quantity"
+        android:layout_toRightOf="@+id/edt_edit_filling_distance" />
+
+    <CheckBox
+        android:id="@+id/cb_edit_filling_notToTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edt_edit_filling_distance"
+        android:text="@string/edit_filling_cb_notFilledToTop" />
+
+    <TextView
+        android:id="@+id/tv_edit_filling_extraData"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cb_edit_filling_notToTop"
+        android:gravity="center"
+        android:text="@string/edit_filling_tv_extraData" />
+
+    <TextView
+        android:id="@+id/tv_edit_filling_fuelType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/half_screen_helper"
+        android:layout_below="@+id/tv_edit_filling_extraData"
+        android:text="@string/edit_filling_tv_fuelType" />
+
+    <Spinner
+        android:id="@+id/sp_edit_filling_fuelType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_edit_filling_extraData"
+        android:layout_toRightOf="@+id/tv_edit_filling_fuelType"
+        android:entries="@array/array_fueltype" />
+
+    <EditText
+        android:id="@+id/edt_edit_filling_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sp_edit_filling_fuelType"
+        android:hint="@string/edit_filling_edt_comment"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/btn_new_filling_save"
+        android:layout_below="@+id/edt_edit_filling_comment" />
+
+</RelativeLayout>

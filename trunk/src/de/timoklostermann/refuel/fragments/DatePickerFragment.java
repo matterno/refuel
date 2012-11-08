@@ -2,21 +2,14 @@ package de.timoklostermann.refuel.fragments;
 
 import java.util.Calendar;
 
+import de.timoklostermann.refuel.EditFillingActivity;
+
 import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.DatePicker;
 
-public class DatePickerFragment extends DialogFragment implements OnDateSetListener {
-
-	Button btn_date;
-	
-    public DatePickerFragment(Button btn_date) {
-    	this.btn_date = btn_date;
-	}
+public class DatePickerFragment extends DialogFragment {
 
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,10 +20,6 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
-    }
-
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-    	btn_date.setText(day + "." + (month+1) + "." + year);
+        return new DatePickerDialog(getActivity(), (EditFillingActivity)getActivity(), year, month, day);
     }
 }

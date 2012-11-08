@@ -3,7 +3,6 @@
     <!-- TODO: change icon -->
     <item android:id="@+id/menu_changeVehicle"
         android:title="@string/menu_changeCar"
-        android:icon="@android:drawable/ic_menu_preferences" 
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText" />
+        android:orderInCategory="200"
+        android:showAsAction="always|withText" />
 </menu>
