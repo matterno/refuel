@@ -1,7 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_clear"
         android:title="@string/menu_clearInput"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText" />
+        android:showAsAction="always|withText" />
 </menu>

@@ -8,6 +8,6 @@ public class NewVehicleActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_vehicle);
+        setContentView(R.layout.activity_edit_vehicle);
     }
 }

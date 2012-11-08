@@ -1,15 +1,18 @@
 package de.timoklostermann.refuel.fragments;
 
 import de.timoklostermann.refuel.EditFillingActivity;
+import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.adapter.Filling;
 import de.timoklostermann.refuel.adapter.FillingAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class FillingFragment extends ListFragment {
@@ -19,6 +22,9 @@ public class FillingFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+    	
+    	// Populate that this Fragment wants to have a call to onCreateOptionsMenu()
+    	this.setHasOptionsMenu(true);
     	
     	FillingAdapter adapter = new FillingAdapter(inflater.getContext(),testData);
     	setListAdapter(adapter);
@@ -30,5 +36,22 @@ public class FillingFragment extends ListFragment {
     	Intent intent = new Intent(getActivity().getBaseContext(),EditFillingActivity.class);
     	startActivity(intent);
     	super.onListItemClick(l, v, position, id);
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    	super.onCreateOptionsMenu(menu, inflater);
+    	inflater.inflate(R.menu.fragment_filling, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.menu_addFilling:
+    		Intent intent = new Intent(getActivity().getBaseContext(),EditFillingActivity.class);
+    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    		startActivity(intent);
+    	}
+    	return super.onOptionsItemSelected(item);
     }
 }
