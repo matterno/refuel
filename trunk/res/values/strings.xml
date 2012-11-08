@@ -58,11 +58,14 @@
         <item>India</item>
     </string-array>
 
+    
+    <!-- Menu Strings -->
     <string name="menu_clearInput">Clear</string>
     <string name="menu_register">Register</string>
     <string name="menu_changeCar">Change Car</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add">Add</string>
+    <string name="menu_save">Save</string>
     
     <string name="empty"></string>
     
@@ -76,5 +79,17 @@
     <string name="edit_filling_edt_distance">Distance</string>
     <string name="edit_filling_edt_comment">Comment</string>
     <string name="edit_filling_tv_fuelType">Fuel Type</string>
+    
+    <string name="vehicle_tv_information">Vehicle Information</string>
+    <string name="vehicle_tv_settings">Vehicle Settings</string>
+    <string name="vehicle_tv_currency">Currency Symbol</string>
+    <string name="vehicle_tv_distance">Distance Unit</string>
+    <string name="vehicle_tv_quantity">Quantity Unit</string>
+    <string name="vehicle_tv_consumption">Consumption Unit</string>
+    <string name="vehicle_edt_name">Name</string>
+    <string name="vehicle_edt_year">Year</string>
+    <string name="vehicle_edt_make">Make</string>
+    <string name="vehicle_edt_model">Model</string>
+    <string name="vehicle_edt_currency">€</string>
 
 </resources>

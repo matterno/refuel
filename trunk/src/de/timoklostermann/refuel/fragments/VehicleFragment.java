@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Toast;
 
 public class VehicleFragment extends Fragment {
-
-	Button btn_save;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,23 +21,27 @@ public class VehicleFragment extends Fragment {
 
     	View view = inflater.inflate(R.layout.fragment_vehicle, container, false);
     	
-    	btn_save = (Button) view.findViewById(R.id.btn_fragment_vehicle_save);
-    	
-    	btn_save.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// TODO Save
-				
-				Intent intent = new Intent(getActivity().getBaseContext(),SwipeActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-			}
-		});
-    	
+    	// Declare that this fragment has additional Option Menu items
+    	this.setHasOptionsMenu(true);
         return view;
     }
     
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    	super.onCreateOptionsMenu(menu, inflater);
+    	inflater.inflate(R.menu.fragment_vehicle, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.menu_saveVehicle:
+    		//TODO speichern
+    		Toast.makeText(getActivity().getBaseContext(), "Vehicle saved", Toast.LENGTH_SHORT).show(); //TODO I18N
+//    		Intent intent = new Intent(getActivity().getBaseContext(),SwipeActivity.class);
+//			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(intent);
+    	}
+    	return super.onOptionsItemSelected(item);
     }
 }
