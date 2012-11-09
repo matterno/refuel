@@ -3,5 +3,5 @@
     <item android:id="@+id/menu_addFilling"
         android:title="@string/menu_add"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
 </menu>

@@ -95,6 +95,11 @@ public class SwipeActivity extends FragmentActivity {
     	case R.id.menu_changeVehicle:
     		Intent intent = new Intent(this, VehicleActivity.class);
     		startActivity(intent);
+    		break;
+    	case R.id.menu_logout:
+    		// TODO SQLite no automatic login
+    		intent = new Intent(this, LoginActivity.class);
+    		startActivity(intent);
     	}
     	return super.onOptionsItemSelected(item);
     }

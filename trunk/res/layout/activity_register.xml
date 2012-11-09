@@ -8,19 +8,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dip" >
-        <!--  View Title Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:text="REGISTER"
-            android:textSize="25dip"
-            android:textStyle="bold" />
+
         <!--  Name Label -->
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Name" />
+            android:text="@string/register_tv_name" />
         <!--  Name TextField -->
         <EditText
             android:id="@+id/edt_register_name"
@@ -32,7 +25,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Email" />
+            android:text="@string/register_tv_email" />
         <!--  Email TextField -->
         <EditText
             android:id="@+id/edt_register_email"
@@ -45,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dip"
-            android:text="Password" />
+            android:text="@string/register_tv_password" />
         <!--  Password TextField -->
         <EditText
             android:id="@+id/edt_register_password"
@@ -58,23 +51,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dip"
-            android:text="Repeat Password" />
+            android:text="@string/register_tv_password_repeat" />
         <!--  Password TextField -->
         <EditText
             android:id="@+id/edt_register_password_repeat"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-        
-        <!--  Error message -->
-        <TextView android:id="@+id/register_error"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#e30000"
-                    android:padding="10dip"
-                    android:textStyle="bold"/>
  
-        <!--  Login Button -->
+        <!--  Register Button -->
         <Button
             android:id="@+id/btn_register_register"
             android:layout_width="fill_parent"

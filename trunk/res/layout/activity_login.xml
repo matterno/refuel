@@ -16,14 +16,14 @@
             android:text="LOGIN"
             android:textSize="25dip"
             android:textStyle="bold" />
-        <!--  Email Label -->
+        <!--  Name Label -->
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Email" />
-        <!--  Email TextField -->
+            android:text="Name" />
+        <!--  Name TextField -->
         <EditText
-            android:id="@+id/edt_login_email"
+            android:id="@+id/edt_login_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
  

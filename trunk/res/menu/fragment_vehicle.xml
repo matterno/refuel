@@ -3,5 +3,5 @@
     <item android:id="@+id/menu_saveVehicle"
         android:title="@string/menu_save"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
 </menu>
