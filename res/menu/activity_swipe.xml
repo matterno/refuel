@@ -1,8 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <!-- TODO: change icon -->
+
     <item android:id="@+id/menu_changeVehicle"
         android:title="@string/menu_changeCar"
         android:orderInCategory="200"
-        android:showAsAction="always|withText" />
+        android:showAsAction="ifRoom" />
+    
+    <item android:id="@+id/menu_logout"
+        android:title="@string/menu_logout"
+        android:orderInCategory="300"
+        android:showAsAction="ifRoom" />
 </menu>

@@ -1,46 +1,34 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.timoklostermann.refuel"
-    android:versionCode="1"
-    android:versionName="1.0" >
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="de.timoklostermann.refuel">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="15"/>
 
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".SwipeActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name"
-            android:noHistory="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+   <application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+        <activity android:label="@string/app_name" android:name=".SwipeActivity"/>
+        <activity android:label="@string/title_activity_login" android:name=".LoginActivity" android:noHistory="true">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RegisterActivity"
-            android:label="@string/app_name"
-            android:noHistory="true" />
-        <activity
-            android:name=".VehicleActivity"
-            android:label="@string/title_activity_vehicle" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.ListActivity" />
+        <activity android:label="@string/title_activity_register" android:name=".RegisterActivity" android:noHistory="true"/>
+        <activity android:label="@string/title_activity_vehicle" android:name=".VehicleActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="android.app.ListActivity"/>
         </activity>
-        <activity
-            android:name=".NewVehicleActivity"
-            android:label="@string/title_activity_new_vehicle" />
-        <activity
-            android:name=".EditFillingActivity"
-            android:label="@string/title_activity_new_filling" />
+        <activity android:label="@string/title_activity_new_vehicle" android:name=".NewVehicleActivity"/>
+        <activity android:label="@string/title_activity_new_filling" android:name=".EditFillingActivity"/>
+        <service android:name=".GCMIntentService"/>
+        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="de.timoklostermann.refuel"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="de.timoklostermann.refuel"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package de.timoklostermann.refuel.fragments;
 
+import de.timoklostermann.refuel.NewVehicleActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.SwipeActivity;
 import android.content.Intent;
@@ -38,9 +39,12 @@ public class VehicleFragment extends Fragment {
     	case R.id.menu_saveVehicle:
     		//TODO speichern
     		Toast.makeText(getActivity().getBaseContext(), "Vehicle saved", Toast.LENGTH_SHORT).show(); //TODO I18N
-//    		Intent intent = new Intent(getActivity().getBaseContext(),SwipeActivity.class);
-//			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//			startActivity(intent);
+    		
+    		if(getActivity() instanceof NewVehicleActivity) {
+    			Intent intent = new Intent(getActivity().getBaseContext(),SwipeActivity.class);
+    			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    			startActivity(intent);
+    		}	
     	}
     	return super.onOptionsItemSelected(item);
     }
