@@ -38,7 +38,7 @@
         android:layout_below="@+id/tv_vehicle_information"
         android:layout_toRightOf="@+id/edt_vehicle_name"
         android:hint="@string/vehicle_edt_year"
-        android:inputType="text" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/edt_vehicle_make"
@@ -71,7 +71,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <!-- Distance -->
-
+    
     <TextView
         android:id="@+id/tv_vehicle_distance"
         android:layout_width="wrap_content"

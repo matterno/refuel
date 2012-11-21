@@ -1,22 +1,28 @@
 package de.timoklostermann.refuel;
 
+import de.timoklostermann.refuel.util.Constants;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class VehicleActivity extends ListActivity {
+public class ChooseVehicleActivity extends ListActivity {
 
-	String[] vehicles = {"1","2"};
+	private String[] vehicles = {"1","2"};
+	
+	private String userName;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_vehicle);
+        
+        this.userName = getIntent().getExtras().getString(Constants.LOGIN_NAME);
+        Log.d("ChooseVehicle username", userName);
         
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
@@ -38,9 +44,10 @@ public class VehicleActivity extends ListActivity {
         		Intent intent = new Intent(this, SwipeActivity.class);
         		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         		startActivity(intent);
-                return true;
+        		break;
             case R.id.menu_addVehicle:
             	intent = new Intent(this, NewVehicleActivity.class);
+            	intent.putExtra(Constants.LOGIN_NAME, this.userName);
             	startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

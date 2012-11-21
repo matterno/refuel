@@ -94,7 +94,10 @@
     <string name="vehicle_edt_make">Make</string>
     <string name="vehicle_edt_model">Model</string>
     <string name="vehicle_edt_currency">€</string>
-
+    <string name="vehicle_toast_saved">Vehicle saved</string>   
+    <string name="vehicle_saving">Saving vehicle &#8230;</string>
+    <string name="vehicle_getting">Getting vehicle data &#8230;</string> 
+    
     <string name="login_tv_name">Name</string>
     <string name="login_tv_password">Password</string>
     
@@ -108,10 +111,12 @@
     
     <string name="register_error_user_found">This user already exists!</string>
     
+    <string name="vehicle_error_not_found">Found no vehicle</string>
+    
     <string name="error_input">Please check your input</string>
     
     <string name="error_no_connection">Could not connect</string>
-    <string name="error_unexpected">Unexpected error occured</string>
+    <string name="error_unexpected">Unexpected error occurred</string>
     
     <string name="login_processing">Logging in &#8230;</string>
     <string name="register_processing">Register &#8230;</string>

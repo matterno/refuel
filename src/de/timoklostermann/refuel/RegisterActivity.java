@@ -4,22 +4,22 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.timoklostermann.refuel.interfaces.RegisterTaskCompleteListener;
+import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.RequestTask;
 import de.timoklostermann.refuel.util.Constants;
-import de.timoklostermann.refuel.util.SimpleCrypto;
+import de.timoklostermann.refuel.util.PasswordEncryption;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegisterActivity extends Activity implements RegisterTaskCompleteListener {
+public class RegisterActivity extends Activity implements RequestCallback {
 
 	Button btn_register;
 	
@@ -46,31 +46,26 @@ public class RegisterActivity extends Activity implements RegisterTaskCompleteLi
         
         btn_register.setOnClickListener(new View.OnClickListener() {
 			
+        	
 			public void onClick(View v) {
 				if(!validateRegister()) {
 					Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_input), Toast.LENGTH_SHORT).show();
 					return;
 				}
 				
-				RegisterRequest req = new RegisterRequest();
+				RegisterRequest req = new RegisterRequest(RegisterActivity.this);
 				
 				// TODO encrypt password
 				try {
 					req.execute(
 							new BasicNameValuePair(Constants.REGISTER_NAME, edt_name.getText().toString()),
-							new BasicNameValuePair(Constants.REGISTER_PW, SimpleCrypto.encrypt("seed",edt_password.getText().toString())),
+							new BasicNameValuePair(Constants.REGISTER_PW, PasswordEncryption.encrypt(edt_password.getText().toString())),
 							new BasicNameValuePair(Constants.REGISTER_EMAIL, edt_email.getText().toString()));
 				} catch (Exception e) {
 					Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_register, menu);
-        return true;
     }
     
     @Override
@@ -81,13 +76,12 @@ public class RegisterActivity extends Activity implements RegisterTaskCompleteLi
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     		startActivity(intent);
     		return true;
-    	case R.id.menu_clear:
-    		//TODO clear
     	}
     	return super.onOptionsItemSelected(item);
     }
     
-    public void onRegisterTaskComplete(JSONObject obj) {
+    @Override
+    public void onRequestComplete(JSONObject obj) {
     	try {
 			if(!obj.getBoolean(Constants.JSON_SUCCESS)) {
 				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.register_error_user_found), Toast.LENGTH_SHORT).show();
@@ -99,7 +93,13 @@ public class RegisterActivity extends Activity implements RegisterTaskCompleteLi
 		// TODO Login = registerName
     	// TODO New User -> Create Vehicle first NewVehicleActivity.class
 		Intent intent = new Intent(RegisterActivity.this,NewVehicleActivity.class);
+		intent.putExtra(Constants.LOGIN_NAME, edt_name.getText().toString());
 		startActivity(intent);
+	}
+    
+	@Override
+	public Context getContext() {
+		return this;
 	}
     
     private boolean validateRegister() {
@@ -135,15 +135,18 @@ public class RegisterActivity extends Activity implements RegisterTaskCompleteLi
     private class RegisterRequest extends RequestTask {
     	private ProgressDialog progress;
     	
-    	public RegisterRequest() {
+    	private RequestCallback callback;
+    	
+    	public RegisterRequest(RequestCallback callback) {
     		super();
     		
+    		this.callback = callback;
     		this.servletURL = "register";
     	}
     	
     	@Override
     	protected void onPreExecute() {
-    		this.progress = new ProgressDialog(RegisterActivity.this);
+    		this.progress = new ProgressDialog(callback.getContext());
     		progress.setMessage(getResources().getString(R.string.register_processing));
     		progress.show();
     	}
@@ -163,7 +166,7 @@ public class RegisterActivity extends Activity implements RegisterTaskCompleteLi
     				}
     				return;
     			}
-    			RegisterActivity.this.onRegisterTaskComplete(obj);
+    			callback.onRequestComplete(obj);
 			} catch (Exception e) {
 				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
 			}
