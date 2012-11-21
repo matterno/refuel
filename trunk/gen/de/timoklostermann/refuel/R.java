@@ -43,14 +43,13 @@ public final class R {
         public static final int edt_vehicle_name=0x7f08001c;
         public static final int edt_vehicle_year=0x7f08001d;
         public static final int half_screen_helper=0x7f080000;
-        public static final int menu_addFilling=0x7f080033;
-        public static final int menu_addVehicle=0x7f080032;
-        public static final int menu_changeVehicle=0x7f080030;
-        public static final int menu_clear=0x7f08002f;
+        public static final int menu_addFilling=0x7f080032;
+        public static final int menu_addVehicle=0x7f080031;
+        public static final int menu_changeVehicle=0x7f08002f;
         public static final int menu_edit_filling_save=0x7f08002d;
-        public static final int menu_logout=0x7f080031;
+        public static final int menu_logout=0x7f080030;
         public static final int menu_register=0x7f08002e;
-        public static final int menu_saveVehicle=0x7f080034;
+        public static final int menu_saveVehicle=0x7f080033;
         public static final int newVehicle=0x7f08000b;
         public static final int pager=0x7f080016;
         public static final int pager_title_strip=0x7f080017;
@@ -89,11 +88,10 @@ public final class R {
     public static final class menu {
         public static final int activity_edit_filling=0x7f070000;
         public static final int activity_login=0x7f070001;
-        public static final int activity_register=0x7f070002;
-        public static final int activity_swipe=0x7f070003;
-        public static final int activity_vehicle=0x7f070004;
-        public static final int fragment_filling=0x7f070005;
-        public static final int fragment_vehicle=0x7f070006;
+        public static final int activity_swipe=0x7f070002;
+        public static final int activity_vehicle=0x7f070003;
+        public static final int fragment_filling=0x7f070004;
+        public static final int fragment_vehicle=0x7f070005;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
@@ -106,14 +104,14 @@ public final class R {
         public static final int edit_filling_tv_fuelType=0x7f040019;
         public static final int edit_filling_tv_information=0x7f040013;
         public static final int empty=0x7f040010;
-        public static final int error_input=0x7f04002e;
-        public static final int error_no_connection=0x7f04002f;
-        public static final int error_unexpected=0x7f040030;
-        public static final int login_error_user_exists_not=0x7f04002c;
-        public static final int login_error_wrong_password=0x7f04002b;
-        public static final int login_processing=0x7f040031;
-        public static final int login_tv_name=0x7f040025;
-        public static final int login_tv_password=0x7f040026;
+        public static final int error_input=0x7f040032;
+        public static final int error_no_connection=0x7f040033;
+        public static final int error_unexpected=0x7f040034;
+        public static final int login_error_user_exists_not=0x7f04002f;
+        public static final int login_error_wrong_password=0x7f04002e;
+        public static final int login_processing=0x7f040035;
+        public static final int login_tv_name=0x7f040028;
+        public static final int login_tv_password=0x7f040029;
         public static final int menu_add=0x7f04000d;
         public static final int menu_changeCar=0x7f04000b;
         /**  Menu Strings 
@@ -123,12 +121,12 @@ public final class R {
         public static final int menu_register=0x7f04000a;
         public static final int menu_save=0x7f04000e;
         public static final int menu_settings=0x7f04000c;
-        public static final int register_error_user_found=0x7f04002d;
-        public static final int register_processing=0x7f040032;
-        public static final int register_tv_email=0x7f040028;
-        public static final int register_tv_name=0x7f040027;
-        public static final int register_tv_password=0x7f040029;
-        public static final int register_tv_password_repeat=0x7f04002a;
+        public static final int register_error_user_found=0x7f040030;
+        public static final int register_processing=0x7f040036;
+        public static final int register_tv_email=0x7f04002b;
+        public static final int register_tv_name=0x7f04002a;
+        public static final int register_tv_password=0x7f04002c;
+        public static final int register_tv_password_repeat=0x7f04002d;
         public static final int save=0x7f040011;
         public static final int title_activity_login=0x7f040007;
         public static final int title_activity_new_filling=0x7f040006;
@@ -143,6 +141,10 @@ public final class R {
         public static final int vehicle_edt_model=0x7f040023;
         public static final int vehicle_edt_name=0x7f040020;
         public static final int vehicle_edt_year=0x7f040021;
+        public static final int vehicle_error_not_found=0x7f040031;
+        public static final int vehicle_getting=0x7f040027;
+        public static final int vehicle_saving=0x7f040026;
+        public static final int vehicle_toast_saved=0x7f040025;
         public static final int vehicle_tv_consumption=0x7f04001f;
         public static final int vehicle_tv_currency=0x7f04001c;
         public static final int vehicle_tv_distance=0x7f04001d;

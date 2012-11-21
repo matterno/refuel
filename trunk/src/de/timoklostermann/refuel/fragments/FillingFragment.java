@@ -50,7 +50,6 @@ public class FillingFragment extends ListFragment {
     	switch(item.getItemId()) {
     	case R.id.menu_addFilling:
     		Intent intent = new Intent(getActivity().getBaseContext(),EditFillingActivity.class);
-    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     		startActivity(intent);
     	}
     	return super.onOptionsItemSelected(item);
