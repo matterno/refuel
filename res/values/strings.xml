@@ -64,7 +64,7 @@
     <!-- Menu Strings -->
     <string name="menu_clearInput">Clear</string>
     <string name="menu_register">Register</string>
-    <string name="menu_changeCar">Change Car</string>
+    <string name="menu_addVehicle">Add Vehicle</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add">Add</string>
     <string name="menu_save">Save</string>

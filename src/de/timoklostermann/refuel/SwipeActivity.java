@@ -1,5 +1,8 @@
 package de.timoklostermann.refuel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
@@ -10,19 +13,25 @@ import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequest;
 import de.timoklostermann.refuel.util.Constants;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-public class SwipeActivity extends FragmentActivity implements RequestCallback {
+public class SwipeActivity extends FragmentActivity implements RequestCallback,
+		ActionBar.OnNavigationListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -38,6 +47,8 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
+
+	private SpinnerAdapter mSpinnerAdapter;
 
 	private String userName;
 
@@ -59,12 +70,18 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 
 	private String vehicleCurrency;
 
+	private List<String> vehicles;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
 
-		userName = getIntent().getExtras().getString(Constants.LOGIN_NAME);
+		SharedPreferences prefs = getSharedPreferences(
+				LoginActivity.PREFERENCES, MODE_PRIVATE);
+		userName = prefs.getString(Constants.LOGIN_NAME, "");
+
+		Log.d("userName", userName);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections
@@ -76,11 +93,23 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
-		// Send a vehicle request that gets the default vehicle
+		// Put car navigation into actionBar
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		vehicles = new ArrayList<String>();
+		vehicles.add("asdasdas");
+		
+		mSpinnerAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_dropdown_item, vehicles);
+		
+		actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
+
+		// Send a vehicle request that gets all vehicle
 		VehicleRequest req = new VehicleRequest(this);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
-					Constants.REQUEST_TYPE_VEHICLE_GET_DEFAULT + ""),
+					Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST + ""),
 					new BasicNameValuePair(Constants.VEHICLE_USER,
 							this.userName));
 		} catch (Exception e) {
@@ -98,10 +127,9 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_changeVehicle:
-			Intent intent = new Intent(this, ChooseVehicleActivity.class);
+		case R.id.menu_addVehicle:
+			Intent intent = new Intent(this, NewVehicleActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(Constants.LOGIN_NAME, this.userName);
 			startActivity(intent);
 			break;
 		case R.id.menu_logout:
@@ -111,11 +139,30 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		// Send a vehicle request that gets the default vehicle
+		VehicleRequest req = new VehicleRequest(this);
+		try {
+			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
+					Constants.REQUEST_TYPE_VEHICLE_GET_DEFAULT + ""),
+					new BasicNameValuePair(Constants.VEHICLE_USER,
+							this.userName));
+		} catch (Exception e) {
+			Toast.makeText(this, getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void onRequestComplete(JSONObject obj) {
 		// TODO Start NewVehicle-Activity if no vehicle in DB
 
+		// TODO Bugged cause of different request types
+		
 		try {
 			if (!obj.getBoolean(Constants.JSON_SUCCESS)) {
 
@@ -124,30 +171,39 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 					Toast.makeText(this,
 							getString(R.string.vehicle_error_not_found),
 							Toast.LENGTH_SHORT).show();
-					
+
 					// TODO NewVehicleActivity
 					break;
 				}
 				return;
 			}
-			
+
 			vehicleName = obj.getString(Constants.VEHICLE_NAME);
-			vehicleYear = Integer.parseInt(obj.getString(Constants.VEHICLE_YEAR));
+			vehicleYear = Integer.parseInt(obj
+					.getString(Constants.VEHICLE_YEAR));
 			vehicleMake = obj.getString(Constants.VEHICLE_MAKE);
 			vehicleModel = obj.getString(Constants.VEHICLE_MODEL);
-			vehicleType = Integer.parseInt(obj.getString(Constants.VEHICLE_TYPE_ID));
-			vehicleDistanceUnit = Integer.parseInt(obj.getString(Constants.VEHICLE_DISTANCE_UNIT));
-			vehicleQuantityUnit = Integer.parseInt(obj.getString(Constants.VEHICLE_QUANTITY_UNIT));
-			vehicleConsumptionUnit = Integer.parseInt(obj.getString(Constants.VEHICLE_CONSUMPTION_UNIT));
+			vehicleType = Integer.parseInt(obj
+					.getString(Constants.VEHICLE_TYPE_ID));
+			vehicleDistanceUnit = Integer.parseInt(obj
+					.getString(Constants.VEHICLE_DISTANCE_UNIT));
+			vehicleQuantityUnit = Integer.parseInt(obj
+					.getString(Constants.VEHICLE_QUANTITY_UNIT));
+			vehicleConsumptionUnit = Integer.parseInt(obj
+					.getString(Constants.VEHICLE_CONSUMPTION_UNIT));
 			vehicleCurrency = obj.getString(Constants.VEHICLE_CURRENCY);
+
+//			JSONArray array = obj.getJSONArray(Constants.VEHICLE_NAMES);
+//
+//			for (int i = 0; i < array.length(); i++) {
+//				vehicles.add((String) array.get(0));
+//			}
+//			mSpinnerAdapter = new ArrayAdapter<String>(this,
+//					android.R.layout.simple_spinner_dropdown_item, vehicles);
 		} catch (Exception e) {
-			Toast.makeText(this,
-					getString(R.string.error_unexpected),
+			Toast.makeText(this, getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();
 		}
-		
-		
-		
 		// TODO Get Filling data
 	}
 
@@ -175,15 +231,24 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback {
 				return new StatisticsFragment();
 			case 2:
 				Bundle arguments = new Bundle();
-				arguments.putString(Constants.VEHICLE_NAME, SwipeActivity.this.vehicleName);
-				arguments.putInt(Constants.VEHICLE_YEAR, SwipeActivity.this.vehicleYear);
-				arguments.putString(Constants.VEHICLE_MAKE, SwipeActivity.this.vehicleMake);
-				arguments.putString(Constants.VEHICLE_MODEL, SwipeActivity.this.vehicleModel);
-				arguments.putInt(Constants.VEHICLE_TYPE_ID, SwipeActivity.this.vehicleType); 
-				arguments.putInt(Constants.VEHICLE_DISTANCE_UNIT, SwipeActivity.this.vehicleDistanceUnit);
-				arguments.putInt(Constants.VEHICLE_QUANTITY_UNIT, SwipeActivity.this.vehicleQuantityUnit);
-				arguments.putInt(Constants.VEHICLE_CONSUMPTION_UNIT, SwipeActivity.this.vehicleConsumptionUnit);
-				arguments.putString(Constants.VEHICLE_CURRENCY, SwipeActivity.this.vehicleCurrency);
+				arguments.putString(Constants.VEHICLE_NAME,
+						SwipeActivity.this.vehicleName);
+				arguments.putInt(Constants.VEHICLE_YEAR,
+						SwipeActivity.this.vehicleYear);
+				arguments.putString(Constants.VEHICLE_MAKE,
+						SwipeActivity.this.vehicleMake);
+				arguments.putString(Constants.VEHICLE_MODEL,
+						SwipeActivity.this.vehicleModel);
+				arguments.putInt(Constants.VEHICLE_TYPE_ID,
+						SwipeActivity.this.vehicleType);
+				arguments.putInt(Constants.VEHICLE_DISTANCE_UNIT,
+						SwipeActivity.this.vehicleDistanceUnit);
+				arguments.putInt(Constants.VEHICLE_QUANTITY_UNIT,
+						SwipeActivity.this.vehicleQuantityUnit);
+				arguments.putInt(Constants.VEHICLE_CONSUMPTION_UNIT,
+						SwipeActivity.this.vehicleConsumptionUnit);
+				arguments.putString(Constants.VEHICLE_CURRENCY,
+						SwipeActivity.this.vehicleCurrency);
 				VehicleFragment fragment = new VehicleFragment();
 				fragment.setArguments(arguments);
 				return fragment;

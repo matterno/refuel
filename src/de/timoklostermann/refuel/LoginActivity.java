@@ -5,8 +5,6 @@ import org.json.JSONObject;
 
 import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.RequestTask;
-import de.timoklostermann.refuel.sqlite.DAO.LoginDAO;
-import de.timoklostermann.refuel.sqlite.entity.Login;
 import de.timoklostermann.refuel.util.Constants;
 import de.timoklostermann.refuel.util.PasswordEncryption;
 import android.os.Bundle;
@@ -14,6 +12,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +22,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity implements
-		RequestCallback {
+public class LoginActivity extends Activity implements RequestCallback {
+
+	public static final String PREFERENCES = "refuelPreferences";
+
+	private static final String PREF_REMEMBER = "rememberMe";
 
 	private Button btn_login;
 
@@ -33,10 +35,6 @@ public class LoginActivity extends Activity implements
 	private EditText edt_pw;
 
 	private CheckBox cb_remember;
-
-	private LoginDAO loginDAO;
-
-	private Login lastLogin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,12 @@ public class LoginActivity extends Activity implements
 		edt_pw = (EditText) this.findViewById(R.id.edt_login_password);
 		cb_remember = (CheckBox) this.findViewById(R.id.cb_login_remember);
 
-		loginDAO = new LoginDAO(this);
+		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
+				MODE_PRIVATE);
+		if (prefs.getBoolean(PREF_REMEMBER, false)) {
+			edt_login.setText(prefs.getString(Constants.LOGIN_NAME, ""));
+			edt_pw.setText(prefs.getString(Constants.LOGIN_PASSWORD, ""));
+		}
 
 		btn_login.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -97,37 +100,17 @@ public class LoginActivity extends Activity implements
 	}
 
 	@Override
-	protected void onResume() {
-		loginDAO.open();
-		lastLogin = loginDAO.getLastLogin();
+	protected void onStop() {
+		super.onStop();
 
-		Log.d("onResume", "lastLogin is null? " + (lastLogin == null));
-
-		if (lastLogin != null) {
-			edt_login.setText(lastLogin.getName());
-			edt_pw.setText(lastLogin.getPassword());
-			cb_remember.setChecked(true);
-		}
-
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		if (!cb_remember.isChecked() && lastLogin != null) {
-			loginDAO.deleteLogin(lastLogin);
-		} else if (cb_remember.isChecked() && lastLogin != null) {
-			loginDAO.deleteLogin(lastLogin);
-			loginDAO.createLogin(edt_login.getText().toString(), edt_pw
-					.getText().toString());
-		} else if (cb_remember.isChecked() && lastLogin == null) {
-			loginDAO.createLogin(edt_login.getText().toString(), edt_pw
-					.getText().toString());
-		}
-		// else do nothing
+		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.LOGIN_NAME, edt_login.getText().toString());
+		editor.putString(Constants.LOGIN_PASSWORD, edt_pw.getText().toString());
+		editor.putBoolean(PREF_REMEMBER, cb_remember.isChecked());
 		
-		loginDAO.close();
-		super.onPause();
+		editor.commit();
 	}
 
 	@Override
@@ -163,10 +146,9 @@ public class LoginActivity extends Activity implements
 
 		Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra(Constants.LOGIN_NAME, edt_login.getText().toString());
 		startActivity(intent);
 	}
-	
+
 	@Override
 	public Context getContext() {
 		return this;
@@ -201,10 +183,10 @@ public class LoginActivity extends Activity implements
 		private ProgressDialog progress;
 
 		RequestCallback callback;
-		
+
 		public LoginRequest(RequestCallback callback) {
 			super();
-			
+
 			this.callback = callback;
 			this.servletURL = "login";
 		}

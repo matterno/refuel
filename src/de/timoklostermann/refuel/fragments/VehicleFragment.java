@@ -3,6 +3,7 @@ package de.timoklostermann.refuel.fragments;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import de.timoklostermann.refuel.LoginActivity;
 import de.timoklostermann.refuel.NewVehicleActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.SwipeActivity;
@@ -11,6 +12,7 @@ import de.timoklostermann.refuel.net.VehicleRequest;
 import de.timoklostermann.refuel.util.Constants;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -51,9 +53,9 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		View view = inflater.inflate(R.layout.fragment_vehicle, container,
 				false);
 
-		userName = getActivity().getIntent().getExtras()
-				.getString(Constants.LOGIN_NAME);
-
+		SharedPreferences prefs = getActivity().getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE);
+		userName = prefs.getString(Constants.LOGIN_NAME, "");
+		
 		// Declare that this fragment has additional Option Menu items
 		this.setHasOptionsMenu(true);
 

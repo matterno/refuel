@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/menu_changeVehicle"
-        android:title="@string/menu_changeCar"
+    <item android:id="@+id/menu_addVehicle"
+        android:title="@string/menu_addVehicle"
         android:orderInCategory="200"
         android:showAsAction="never" />
     
