@@ -43,13 +43,12 @@ public final class R {
         public static final int edt_vehicle_name=0x7f08001c;
         public static final int edt_vehicle_year=0x7f08001d;
         public static final int half_screen_helper=0x7f080000;
-        public static final int menu_addFilling=0x7f080032;
-        public static final int menu_addVehicle=0x7f080031;
-        public static final int menu_changeVehicle=0x7f08002f;
+        public static final int menu_addFilling=0x7f080031;
+        public static final int menu_addVehicle=0x7f08002f;
         public static final int menu_edit_filling_save=0x7f08002d;
         public static final int menu_logout=0x7f080030;
         public static final int menu_register=0x7f08002e;
-        public static final int menu_saveVehicle=0x7f080033;
+        public static final int menu_saveVehicle=0x7f080032;
         public static final int newVehicle=0x7f08000b;
         public static final int pager=0x7f080016;
         public static final int pager_title_strip=0x7f080017;
@@ -113,7 +112,7 @@ public final class R {
         public static final int login_tv_name=0x7f040028;
         public static final int login_tv_password=0x7f040029;
         public static final int menu_add=0x7f04000d;
-        public static final int menu_changeCar=0x7f04000b;
+        public static final int menu_addVehicle=0x7f04000b;
         /**  Menu Strings 
          */
         public static final int menu_clearInput=0x7f040009;

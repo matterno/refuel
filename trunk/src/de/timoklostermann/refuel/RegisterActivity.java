@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -55,7 +56,6 @@ public class RegisterActivity extends Activity implements RequestCallback {
 				
 				RegisterRequest req = new RegisterRequest(RegisterActivity.this);
 				
-				// TODO encrypt password
 				try {
 					req.execute(
 							new BasicNameValuePair(Constants.REGISTER_NAME, edt_name.getText().toString()),
@@ -90,10 +90,16 @@ public class RegisterActivity extends Activity implements RequestCallback {
 			Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
 		}
     	
-		// TODO Login = registerName
+    	SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFERENCES,
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.LOGIN_NAME, edt_name.getText().toString());
+		editor.putString(Constants.LOGIN_PASSWORD, edt_password.getText().toString());
+		
+		editor.commit();
+		
     	// TODO New User -> Create Vehicle first NewVehicleActivity.class
-		Intent intent = new Intent(RegisterActivity.this,NewVehicleActivity.class);
-		intent.putExtra(Constants.LOGIN_NAME, edt_name.getText().toString());
+		Intent intent = new Intent(RegisterActivity.this, NewVehicleActivity.class);
 		startActivity(intent);
 	}
     
