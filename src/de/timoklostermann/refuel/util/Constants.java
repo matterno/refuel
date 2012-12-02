@@ -8,7 +8,6 @@ public interface Constants {
 	public static final String REGISTER_EMAIL = "registerEmail";
 	public static final String REGISTER_PW = "registerPw";
 	
-	public static final String VEHICLE_USER = "vehicleUser";
 	public static final String VEHICLE_MAKE = "vehicleMarque";
 	public static final String VEHICLE_MODEL = "vehicleModel";
 	public static final String VEHICLE_NAME = "vehicleName";
@@ -19,11 +18,17 @@ public interface Constants {
 	public static final String VEHICLE_CONSUMPTION_UNIT = "vehicleConsumptionUnit";
 	public static final String VEHICLE_CURRENCY = "vehicleCurrency";
 	public static final String VEHICLE_NAMES = "vehicleNames";
+	public static final String VEHICLE_KEY = "vehicleKey";
+	
+	public static final String USER_NAME = "userName";
 	
 	public static final String REQUEST_TYPE = "requestType";
-	public static final int REQUEST_TYPE_VEHICLE_SAVE_DEFAULT = 0;
-	public static final int REQUEST_TYPE_VEHICLE_GET_DEFAULT = 1;
+	public static final int REQUEST_TYPE_VEHICLE_SAVE = 0;
+	public static final int REQUEST_TYPE_VEHICLE_GET = 1;
 	public static final int REQUEST_TYPE_VEHICLE_GET_ALL_LIST = 2;
+	public static final int REQUEST_TYPE_VEHICLE_UPDATE = 3;
+	
+	public static final int REQUEST_TYPE_USER_SAVE_DEFAULT_VEHICLE = 0;
 	
 	public static final String JSON_SUCCESS = "SUCCESS";
 	public static final String JSON_ERROR = "ERROR";

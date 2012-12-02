@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import de.timoklostermann.refuel.fragments.FillingFragment;
@@ -22,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
@@ -69,6 +71,8 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	private int vehicleConsumptionUnit;
 
 	private String vehicleCurrency;
+	
+	private long vehicleID;
 
 	private List<String> vehicles;
 
@@ -97,25 +101,9 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-		vehicles = new ArrayList<String>();
-		vehicles.add("asdasdas");
-		
-		mSpinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, vehicles);
-		
-		actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
-
+		Log.d("SwipeActivity", "Requesting all vehicle names");
 		// Send a vehicle request that gets all vehicle
-		VehicleRequest req = new VehicleRequest(this);
-		try {
-			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
-					Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST + ""),
-					new BasicNameValuePair(Constants.VEHICLE_USER,
-							this.userName));
-		} catch (Exception e) {
-			Toast.makeText(this, getString(R.string.error_unexpected),
-					Toast.LENGTH_SHORT).show();
-		}
+		requestAllVehicle();
 	}
 
 	@Override
@@ -142,18 +130,16 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		// Send a vehicle request that gets the default vehicle
-		VehicleRequest req = new VehicleRequest(this);
-		try {
-			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
-					Constants.REQUEST_TYPE_VEHICLE_GET_DEFAULT + ""),
-					new BasicNameValuePair(Constants.VEHICLE_USER,
-							this.userName));
-		} catch (Exception e) {
-			Toast.makeText(this, getString(R.string.error_unexpected),
-					Toast.LENGTH_SHORT).show();
-			return false;
-		}
+		Log.d("SwipeActivity", "onNavigationItemSelected");
+		vehicleName = vehicles.get(itemPosition);
+
+		SharedPreferences prefs = getSharedPreferences(
+				LoginActivity.PREFERENCES, MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.VEHICLE_NAME, vehicleName);
+		editor.commit();
+
+		this.requestGetVehicle();
 		return true;
 	}
 
@@ -161,8 +147,6 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	public void onRequestComplete(JSONObject obj) {
 		// TODO Start NewVehicle-Activity if no vehicle in DB
 
-		// TODO Bugged cause of different request types
-		
 		try {
 			if (!obj.getBoolean(Constants.JSON_SUCCESS)) {
 
@@ -172,39 +156,88 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 							getString(R.string.vehicle_error_not_found),
 							Toast.LENGTH_SHORT).show();
 
-					// TODO NewVehicleActivity
+					// TODO NewVehicleActivity on getting all
+					// else ??
 					break;
 				}
 				return;
 			}
 
-			vehicleName = obj.getString(Constants.VEHICLE_NAME);
-			vehicleYear = Integer.parseInt(obj
-					.getString(Constants.VEHICLE_YEAR));
-			vehicleMake = obj.getString(Constants.VEHICLE_MAKE);
-			vehicleModel = obj.getString(Constants.VEHICLE_MODEL);
-			vehicleType = Integer.parseInt(obj
-					.getString(Constants.VEHICLE_TYPE_ID));
-			vehicleDistanceUnit = Integer.parseInt(obj
-					.getString(Constants.VEHICLE_DISTANCE_UNIT));
-			vehicleQuantityUnit = Integer.parseInt(obj
-					.getString(Constants.VEHICLE_QUANTITY_UNIT));
-			vehicleConsumptionUnit = Integer.parseInt(obj
-					.getString(Constants.VEHICLE_CONSUMPTION_UNIT));
-			vehicleCurrency = obj.getString(Constants.VEHICLE_CURRENCY);
+			switch (obj.getInt(Constants.REQUEST_TYPE)) {
+			case Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST:
+				JSONArray array = obj.getJSONArray(Constants.VEHICLE_NAMES);
 
-//			JSONArray array = obj.getJSONArray(Constants.VEHICLE_NAMES);
-//
-//			for (int i = 0; i < array.length(); i++) {
-//				vehicles.add((String) array.get(0));
-//			}
-//			mSpinnerAdapter = new ArrayAdapter<String>(this,
-//					android.R.layout.simple_spinner_dropdown_item, vehicles);
+				vehicles = new ArrayList<String>();
+
+				for (int i = 0; i < array.length(); i++) {
+					vehicles.add((String) array.get(i));
+				}
+
+				// Set new SpinnerAdapter
+				mSpinnerAdapter = new ArrayAdapter<String>(this,
+						android.R.layout.simple_spinner_dropdown_item, vehicles);
+				getActionBar()
+						.setListNavigationCallbacks(mSpinnerAdapter, this);
+
+				SharedPreferences prefs = getSharedPreferences(
+						LoginActivity.PREFERENCES, MODE_PRIVATE);
+
+				String vehicle = prefs.getString(Constants.VEHICLE_NAME, "");
+				if (vehicles.contains(vehicle)) {
+					getActionBar().setSelectedNavigationItem(
+							vehicles.indexOf(vehicle));
+				}
+
+				break;
+			case Constants.REQUEST_TYPE_VEHICLE_GET:
+				vehicleName = obj.getString(Constants.VEHICLE_NAME);
+				vehicleYear = Integer.parseInt(obj
+						.getString(Constants.VEHICLE_YEAR));
+				vehicleMake = obj.getString(Constants.VEHICLE_MAKE);
+				vehicleModel = obj.getString(Constants.VEHICLE_MODEL);
+				vehicleType = Integer.parseInt(obj
+						.getString(Constants.VEHICLE_TYPE_ID));
+				vehicleDistanceUnit = Integer.parseInt(obj
+						.getString(Constants.VEHICLE_DISTANCE_UNIT));
+				vehicleQuantityUnit = Integer.parseInt(obj
+						.getString(Constants.VEHICLE_QUANTITY_UNIT));
+				vehicleConsumptionUnit = Integer.parseInt(obj
+						.getString(Constants.VEHICLE_CONSUMPTION_UNIT));
+				vehicleCurrency = obj.getString(Constants.VEHICLE_CURRENCY);
+				vehicleID = obj.getLong(Constants.VEHICLE_KEY);
+				
+				saveVehicleDataToSharedPreferences();
+				mSectionsPagerAdapter.notifyDataSetChanged();
+				
+				// TODO Get Filling data
+
+				Log.d("Get_data vehicleName", vehicleName);
+				Log.d("Get_data vehicleYear", vehicleYear + "");
+				Log.d("Get_data vehicleMake", vehicleMake);
+				break;
+			case Constants.REQUEST_TYPE_VEHICLE_UPDATE:
+				requestAllVehicle();
+				break;
+			}
+
 		} catch (Exception e) {
+			Log.d("SwipeActivity", "Error in vehicle request");
+			e.printStackTrace();
 			Toast.makeText(this, getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();
+
+			// TODO Go to login
 		}
-		// TODO Get Filling data
+	}
+
+	@Override
+	protected void onStop() {
+		SharedPreferences prefs = getSharedPreferences(
+				LoginActivity.PREFERENCES, MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.VEHICLE_NAME, vehicleName);
+		editor.commit();
+		super.onPause();
 	}
 
 	@Override
@@ -216,7 +249,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the primary sections of the app.
 	 */
-	private class SectionsPagerAdapter extends FragmentPagerAdapter {
+	private class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -230,27 +263,8 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			case 1:
 				return new StatisticsFragment();
 			case 2:
-				Bundle arguments = new Bundle();
-				arguments.putString(Constants.VEHICLE_NAME,
-						SwipeActivity.this.vehicleName);
-				arguments.putInt(Constants.VEHICLE_YEAR,
-						SwipeActivity.this.vehicleYear);
-				arguments.putString(Constants.VEHICLE_MAKE,
-						SwipeActivity.this.vehicleMake);
-				arguments.putString(Constants.VEHICLE_MODEL,
-						SwipeActivity.this.vehicleModel);
-				arguments.putInt(Constants.VEHICLE_TYPE_ID,
-						SwipeActivity.this.vehicleType);
-				arguments.putInt(Constants.VEHICLE_DISTANCE_UNIT,
-						SwipeActivity.this.vehicleDistanceUnit);
-				arguments.putInt(Constants.VEHICLE_QUANTITY_UNIT,
-						SwipeActivity.this.vehicleQuantityUnit);
-				arguments.putInt(Constants.VEHICLE_CONSUMPTION_UNIT,
-						SwipeActivity.this.vehicleConsumptionUnit);
-				arguments.putString(Constants.VEHICLE_CURRENCY,
-						SwipeActivity.this.vehicleCurrency);
+				saveVehicleDataToSharedPreferences();
 				VehicleFragment fragment = new VehicleFragment();
-				fragment.setArguments(arguments);
 				return fragment;
 			default:
 				return null;
@@ -277,5 +291,65 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			}
 			return null;
 		}
+		
+		@Override
+		public int getItemPosition(Object object) {
+			return POSITION_NONE;
+		}
+	}
+
+	private void requestAllVehicle() {
+		VehicleRequest req = new VehicleRequest(this);
+		try {
+			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
+					Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST + ""),
+					new BasicNameValuePair(Constants.USER_NAME, this.userName));
+		} catch (Exception e) {
+			Log.d("SwipeActivity", "Error in all vehicle request");
+			Toast.makeText(this, getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private void requestGetVehicle() {
+		Log.d("SwipeActivity",
+				"Requesting vehicle with " + vehicleName);
+		// Send a vehicle request that gets the default vehicle
+		VehicleRequest req = new VehicleRequest(this);
+		try {
+			req.execute(
+					new BasicNameValuePair(Constants.REQUEST_TYPE,
+							Constants.REQUEST_TYPE_VEHICLE_GET + ""),
+					new BasicNameValuePair(Constants.VEHICLE_NAME, vehicleName),
+					new BasicNameValuePair(Constants.USER_NAME, this.userName));
+		} catch (Exception e) {
+			Log.d("SwipeActivity", "Error in get vehicle request");
+			Toast.makeText(this, getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private void saveVehicleDataToSharedPreferences() {
+		Log.d("SwipeActivity", "saveVehicleDataToSharedPreferences");
+		SharedPreferences prefs = getSharedPreferences(
+				LoginActivity.PREFERENCES, MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.VEHICLE_NAME, vehicleName);
+		editor.putString(Constants.VEHICLE_NAME, SwipeActivity.this.vehicleName);
+		editor.putInt(Constants.VEHICLE_YEAR, SwipeActivity.this.vehicleYear);
+		editor.putString(Constants.VEHICLE_MAKE, SwipeActivity.this.vehicleMake);
+		editor.putString(Constants.VEHICLE_MODEL,
+				SwipeActivity.this.vehicleModel);
+		editor.putInt(Constants.VEHICLE_TYPE_ID, SwipeActivity.this.vehicleType);
+		editor.putInt(Constants.VEHICLE_DISTANCE_UNIT,
+				SwipeActivity.this.vehicleDistanceUnit);
+		editor.putInt(Constants.VEHICLE_QUANTITY_UNIT,
+				SwipeActivity.this.vehicleQuantityUnit);
+		editor.putInt(Constants.VEHICLE_CONSUMPTION_UNIT,
+				SwipeActivity.this.vehicleConsumptionUnit);
+		editor.putString(Constants.VEHICLE_CURRENCY,
+				SwipeActivity.this.vehicleCurrency);
+		editor.putLong(Constants.VEHICLE_KEY, vehicleID);
+		editor.commit();
 	}
 }
