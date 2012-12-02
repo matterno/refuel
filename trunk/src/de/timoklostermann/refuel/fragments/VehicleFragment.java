@@ -10,6 +10,7 @@ import de.timoklostermann.refuel.SwipeActivity;
 import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequest;
 import de.timoklostermann.refuel.util.Constants;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,6 +47,8 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 
 	private String userName;
 
+	private long vehicleId;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -53,9 +56,6 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		View view = inflater.inflate(R.layout.fragment_vehicle, container,
 				false);
 
-		SharedPreferences prefs = getActivity().getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE);
-		userName = prefs.getString(Constants.LOGIN_NAME, "");
-		
 		// Declare that this fragment has additional Option Menu items
 		this.setHasOptionsMenu(true);
 
@@ -69,34 +69,35 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 				.findViewById(R.id.sp_vehicle_consumption);
 		edt_currency = (EditText) view.findViewById(R.id.edt_vehicle_currency);
 
-		Bundle arguments = getArguments();
-		if (arguments != null) {
-			if (arguments.containsKey(Constants.VEHICLE_NAME))
-				edt_name.setText(arguments.getString(Constants.VEHICLE_NAME));
-			if (arguments.containsKey(Constants.VEHICLE_YEAR))
-				edt_year.setText(arguments.getInt(Constants.VEHICLE_YEAR) + "");
-			if (arguments.containsKey(Constants.VEHICLE_MAKE))
-				edt_make.setText(arguments.getString(Constants.VEHICLE_MAKE));
-			if (arguments.containsKey(Constants.VEHICLE_MODEL))
-				edt_model.setText(arguments.getString(Constants.VEHICLE_MODEL));
-			if (arguments.containsKey(Constants.VEHICLE_CURRENCY))
-				edt_currency.setText(arguments
-						.getString(Constants.VEHICLE_CURRENCY));
-			if (arguments.containsKey(Constants.VEHICLE_DISTANCE_UNIT))
-				sp_distanceUnit.setSelection(arguments
-						.getInt(Constants.VEHICLE_DISTANCE_UNIT));
-			if (arguments.containsKey(Constants.VEHICLE_QUANTITY_UNIT))
-				sp_quantityUnit.setSelection(arguments
-						.getInt(Constants.VEHICLE_QUANTITY_UNIT));
-			if (arguments.containsKey(Constants.VEHICLE_CONSUMPTION_UNIT))
-				sp_consumptionUnit.setSelection(arguments
-						.getInt(Constants.VEHICLE_CONSUMPTION_UNIT));
-			// if(arguments.containsKey(Constants.VEHICLE_TYPE_ID)) //TODO!!!
-			// edt_name.setSelection(arguments.getInt(Constants.VEHICLE_TYPE_ID));
-		}
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		SharedPreferences prefs = getActivity().getSharedPreferences(
+				LoginActivity.PREFERENCES, Context.MODE_PRIVATE);
+		userName = prefs.getString(Constants.LOGIN_NAME, "");
+		
+		if (getActivity() instanceof SwipeActivity) {
+			Log.d("onCreateView", "updateUI");
+			updateUI(
+					prefs.getString(Constants.VEHICLE_NAME, ""),
+					prefs.getInt(Constants.VEHICLE_YEAR, 2000),
+					prefs.getString(Constants.VEHICLE_MAKE, ""),
+					prefs.getString(Constants.VEHICLE_MODEL, ""),
+					prefs.getString(Constants.VEHICLE_CURRENCY, ""),
+					prefs.getInt(Constants.VEHICLE_DISTANCE_UNIT, 0),
+					prefs.getInt(Constants.VEHICLE_QUANTITY_UNIT, 0),
+					prefs.getInt(Constants.VEHICLE_CONSUMPTION_UNIT, 0),
+					0); 
+			//TODO  prefs.getInt(Constants.VEHICLE_TYPE_ID, 0)		
+			vehicleId = prefs.getLong(
+					Constants.VEHICLE_KEY, 0);
+		}
+		
+		super.onResume();
+	}
+	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -114,37 +115,10 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 				return super.onOptionsItemSelected(item);
 			}
 
-			// Send a vehicle request that saves the vehicle
-			VehicleRequest req = new VehicleRequest(this);
-			try {
-				req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
-						Constants.REQUEST_TYPE_VEHICLE_SAVE_DEFAULT + ""),
-						new BasicNameValuePair(Constants.VEHICLE_USER,
-								this.userName), new BasicNameValuePair(
-								Constants.VEHICLE_MAKE, edt_make.getText()
-										.toString()), new BasicNameValuePair(
-								Constants.VEHICLE_MODEL, edt_model.getText()
-										.toString()),
-						new BasicNameValuePair(Constants.VEHICLE_NAME, edt_name
-								.getText().toString()),
-						new BasicNameValuePair(Constants.VEHICLE_YEAR, edt_year
-								.getText().toString()),
-						new BasicNameValuePair(Constants.VEHICLE_TYPE_ID,
-								0 + ""), // TODO!!!
-						new BasicNameValuePair(Constants.VEHICLE_DISTANCE_UNIT,
-								sp_distanceUnit.getSelectedItemId() + ""),
-						new BasicNameValuePair(Constants.VEHICLE_QUANTITY_UNIT,
-								sp_quantityUnit.getSelectedItemId() + ""),
-						new BasicNameValuePair(
-								Constants.VEHICLE_CONSUMPTION_UNIT,
-								sp_consumptionUnit.getSelectedItemId() + ""),
-						new BasicNameValuePair(Constants.VEHICLE_CURRENCY,
-								edt_currency.getText().toString()));
-			} catch (Exception e) {
-				Log.d("VehicleFragment", "unexpected error");
-				Toast.makeText(getActivity(),
-						getResources().getString(R.string.error_unexpected),
-						Toast.LENGTH_SHORT).show();
+			if(getActivity() instanceof SwipeActivity) {
+				updateVehicle();
+			} else {
+				saveVehicle();
 			}
 		}
 		return super.onOptionsItemSelected(item);
@@ -194,5 +168,87 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 	@Override
 	public Context getContext() {
 		return getActivity();
+	}
+
+	public void updateUI(String vehicleName, int vehicleYear, String vehicleMake, String vehicleModel, String vehicleCurrency, int vehicleDistanceUnit, int vehicleQuantityUnit, int vehicleConsumptionUnit, int vehicleType) {
+		Log.d("updateUI with vehicleName", vehicleName);
+		
+		edt_name.setText(vehicleName);
+		edt_year.setText(vehicleYear + "");
+		edt_make.setText(vehicleMake);
+		edt_model.setText(vehicleModel);
+		edt_currency.setText(vehicleCurrency);
+		sp_distanceUnit.setSelection(vehicleDistanceUnit);
+		sp_quantityUnit.setSelection(vehicleQuantityUnit);
+		sp_consumptionUnit.setSelection(vehicleConsumptionUnit);
+		
+		
+		//TODO
+		// sp_vehicleType.setSelectedItem(vehicleType);
+	}
+
+	private void saveVehicle() {
+		// Send a vehicle request that saves the vehicle
+		VehicleRequest req = new VehicleRequest(this);
+		try {
+			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
+					Constants.REQUEST_TYPE_VEHICLE_SAVE + ""),
+					new BasicNameValuePair(Constants.USER_NAME, this.userName),
+					new BasicNameValuePair(Constants.VEHICLE_MAKE, edt_make
+							.getText().toString()), new BasicNameValuePair(
+							Constants.VEHICLE_MODEL, edt_model.getText()
+									.toString()),
+					new BasicNameValuePair(Constants.VEHICLE_NAME, edt_name
+							.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_YEAR, edt_year
+							.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_TYPE_ID, 0 + ""), // TODO!!!
+					new BasicNameValuePair(Constants.VEHICLE_DISTANCE_UNIT,
+							sp_distanceUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_QUANTITY_UNIT,
+							sp_quantityUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_CONSUMPTION_UNIT,
+							sp_consumptionUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_CURRENCY,
+							edt_currency.getText().toString()));
+		} catch (Exception e) {
+			Log.d("VehicleFragment", "unexpected error");
+			Toast.makeText(getActivity(),
+					getResources().getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private void updateVehicle() {
+		// Send a vehicle request that saves the vehicle
+		VehicleRequest req = new VehicleRequest(this);
+		try {
+			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
+					Constants.REQUEST_TYPE_VEHICLE_UPDATE + ""),
+					new BasicNameValuePair(Constants.USER_NAME, this.userName),
+					new BasicNameValuePair(Constants.VEHICLE_MAKE, edt_make
+							.getText().toString()), new BasicNameValuePair(
+							Constants.VEHICLE_MODEL, edt_model.getText()
+									.toString()),
+					new BasicNameValuePair(Constants.VEHICLE_NAME, edt_name
+							.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_YEAR, edt_year
+							.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_TYPE_ID, 0 + ""), // TODO!!!
+					new BasicNameValuePair(Constants.VEHICLE_DISTANCE_UNIT,
+							sp_distanceUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_QUANTITY_UNIT,
+							sp_quantityUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_CONSUMPTION_UNIT,
+							sp_consumptionUnit.getSelectedItemId() + ""),
+					new BasicNameValuePair(Constants.VEHICLE_CURRENCY,
+							edt_currency.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_KEY, vehicleId + ""));
+		} catch (Exception e) {
+			Log.d("VehicleFragment", "unexpected error");
+			Toast.makeText(getActivity(),
+					getResources().getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 }

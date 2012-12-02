@@ -51,6 +51,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 		if (prefs.getBoolean(PREF_REMEMBER, false)) {
 			edt_login.setText(prefs.getString(Constants.LOGIN_NAME, ""));
 			edt_pw.setText(prefs.getString(Constants.LOGIN_PASSWORD, ""));
+			cb_remember.setChecked(true);
 		}
 
 		btn_login.setOnClickListener(new View.OnClickListener() {

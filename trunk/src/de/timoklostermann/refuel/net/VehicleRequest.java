@@ -67,7 +67,8 @@ public class VehicleRequest extends RequestTask {
 			}
 			callback.onRequestComplete(obj);
 		} catch (Exception e) {
-			Log.e("LoginRequest", "Error in onPostExcecute()");
+			Log.e("VehicleRequest", "Error in onPostExcecute()");
+			e.printStackTrace();
 			Toast.makeText(callback.getContext(),
 					callback.getContext().getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();
