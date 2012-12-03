@@ -101,7 +101,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/sp_edit_filling_fuelType"
         android:hint="@string/edit_filling_edt_comment"
-        android:inputType="text" />
+        android:inputType="textMultiLine" />
 
 
 </RelativeLayout>
