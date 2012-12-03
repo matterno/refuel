@@ -28,7 +28,7 @@ public abstract class RequestTask extends
 	protected String servletURL = "";
 	
 	protected int errorcode;
-	
+
 	public RequestTask() {}
 	
 	@Override
