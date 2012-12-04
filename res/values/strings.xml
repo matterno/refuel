@@ -49,18 +49,6 @@
         <item>Imp. Gallons</item>
     </string-array>
     
-    <string-array name="country_arrays">
-        <item>Malaysia</item>
-        <item>United States</item>
-        <item>Indonesia</item>
-        <item>France</item>
-        <item>Italy</item>
-        <item>Singapore</item>
-        <item>New Zealand</item>
-        <item>India</item>
-    </string-array>
-
-    
     <!-- Menu Strings -->
     <string name="menu_clearInput">Clear</string>
     <string name="menu_register">Register</string>
@@ -83,12 +71,9 @@
     <string name="edit_filling_edt_comment">Comment</string>
     <string name="edit_filling_tv_fuelType">Fuel Type</string>
     
-    <string name="vehicle_tv_information">Vehicle Information</string>
-    <string name="vehicle_tv_settings">Vehicle Settings</string>
-    <string name="vehicle_tv_currency">Currency Symbol</string>
-    <string name="vehicle_tv_distance">Distance Unit</string>
-    <string name="vehicle_tv_quantity">Quantity Unit</string>
-    <string name="vehicle_tv_consumption">Consumption Unit</string>
+    <string name="vehicle_tv_information">Information</string>
+    <string name="vehicle_tv_settings">Units</string>
+    <string name="vehicle_tv_currency">Currency</string>
     <string name="vehicle_edt_name">Name</string>
     <string name="vehicle_edt_year">Year</string>
     <string name="vehicle_edt_make">Make</string>
@@ -105,6 +90,14 @@
     <string name="register_tv_email">Email</string>
     <string name="register_tv_password">Password</string>
     <string name="register_tv_password_repeat">Repeat Password</string>
+    
+    <string name="statistics_tv_consumption">Consumption</string>
+    <string name="statistics_tv_distance">Distance</string>
+    <string name="statistics_tv_fillup">Fillup</string>
+    
+    <string name="statistics_tv_average">Average</string>
+    <string name="statistics_tv_worst">Worst</string>
+    <string name="statistics_tv_best">Best</string>
     
     <string name="login_error_wrong_password">Wrong Password</string>
     <string name="login_error_user_exists_not">User not found</string>

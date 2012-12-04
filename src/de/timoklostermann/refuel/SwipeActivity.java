@@ -1,7 +1,6 @@
 package de.timoklostermann.refuel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -11,7 +10,7 @@ import de.timoklostermann.refuel.fragments.FillingFragment;
 import de.timoklostermann.refuel.fragments.StatisticsFragment;
 import de.timoklostermann.refuel.fragments.VehicleFragment;
 import de.timoklostermann.refuel.interfaces.RequestCallback;
-import de.timoklostermann.refuel.net.VehicleRequest;
+import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -35,19 +34,10 @@ import android.widget.Toast;
 public class SwipeActivity extends FragmentActivity implements RequestCallback,
 		ActionBar.OnNavigationListener {
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	private static final String BUNDLE_SELECTED_NAVIGATION_INDEX = "selectedNavigationIndex";
+	
+	private SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	private ViewPager mViewPager;
 
 	private SpinnerAdapter mSpinnerAdapter;
@@ -71,21 +61,17 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	private int vehicleConsumptionUnit;
 
 	private String vehicleCurrency;
-	
+
 	private long vehicleID;
 
-	private List<String> vehicles;
+	private ArrayList<String> vehicles;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_swipe);
-
-		SharedPreferences prefs = getSharedPreferences(
-				LoginActivity.PREFERENCES, MODE_PRIVATE);
-		userName = prefs.getString(Constants.LOGIN_NAME, "");
-
-		Log.d("userName", userName);
+		
+		restoreVehicleDataFromSharedPreferences();
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections
@@ -100,10 +86,21 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 		// Put car navigation into actionBar
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setDisplayShowTitleEnabled(false);
 
-		Log.d("SwipeActivity", "Requesting all vehicle names");
-		// Send a vehicle request that gets all vehicle
-		requestAllVehicle();
+		// Check if this onCreate restores a state (e.g. orientation change)
+		if (savedInstanceState != null) {
+			// Get in onSaveInstanceState saved vehicle names list and saved navigation index
+			vehicles = savedInstanceState
+					.getStringArrayList(Constants.VEHICLE_NAMES);
+			setNavigationListAdapter(vehicles);
+			actionBar.setSelectedNavigationItem(savedInstanceState
+					.getInt(BUNDLE_SELECTED_NAVIGATION_INDEX));
+		} else {
+			// Send a vehicle request that gets all vehicle
+			Log.d("SwipeActivity", "Requesting all vehicle names");
+			requestAllVehicle();
+		}
 	}
 
 	@Override
@@ -131,16 +128,31 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		Log.d("SwipeActivity", "onNavigationItemSelected");
-		vehicleName = vehicles.get(itemPosition);
+		
+		// If the choosen list item is the same, do nothing
+		if(!vehicleName.equals(vehicles.get(itemPosition))) {
+			vehicleName = vehicles.get(itemPosition);
 
-		SharedPreferences prefs = getSharedPreferences(
-				LoginActivity.PREFERENCES, MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(Constants.VEHICLE_NAME, vehicleName);
-		editor.commit();
+			// save Name in SharedPreferences
+			SharedPreferences prefs = getSharedPreferences(
+					LoginActivity.PREFERENCES, MODE_PRIVATE);
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putString(Constants.VEHICLE_NAME, vehicleName);
+			editor.commit();
 
-		this.requestGetVehicle();
+			this.requestGetVehicle();
+		}
 		return true;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		Log.d("SwipeActivity", "onSaveInstanceState");
+
+		outState.putStringArrayList(Constants.VEHICLE_NAMES, vehicles);
+		outState.putInt(BUNDLE_SELECTED_NAVIGATION_INDEX, getActionBar().getSelectedNavigationIndex());
+
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -167,18 +179,16 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			case Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST:
 				JSONArray array = obj.getJSONArray(Constants.VEHICLE_NAMES);
 
+				// Getting list of all vehicle names
 				vehicles = new ArrayList<String>();
-
 				for (int i = 0; i < array.length(); i++) {
 					vehicles.add((String) array.get(i));
 				}
 
 				// Set new SpinnerAdapter
-				mSpinnerAdapter = new ArrayAdapter<String>(this,
-						android.R.layout.simple_spinner_dropdown_item, vehicles);
-				getActionBar()
-						.setListNavigationCallbacks(mSpinnerAdapter, this);
+				setNavigationListAdapter(vehicles);
 
+				// Get previously selected vehicle to select it again
 				SharedPreferences prefs = getSharedPreferences(
 						LoginActivity.PREFERENCES, MODE_PRIVATE);
 
@@ -205,10 +215,10 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 						.getString(Constants.VEHICLE_CONSUMPTION_UNIT));
 				vehicleCurrency = obj.getString(Constants.VEHICLE_CURRENCY);
 				vehicleID = obj.getLong(Constants.VEHICLE_KEY);
-				
+
 				saveVehicleDataToSharedPreferences();
 				mSectionsPagerAdapter.notifyDataSetChanged();
-				
+
 				// TODO Get Filling data
 
 				Log.d("Get_data vehicleName", vehicleName);
@@ -291,7 +301,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			}
 			return null;
 		}
-		
+
 		@Override
 		public int getItemPosition(Object object) {
 			return POSITION_NONE;
@@ -299,7 +309,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	}
 
 	private void requestAllVehicle() {
-		VehicleRequest req = new VehicleRequest(this);
+		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
 					Constants.REQUEST_TYPE_VEHICLE_GET_ALL_LIST + ""),
@@ -310,12 +320,11 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void requestGetVehicle() {
-		Log.d("SwipeActivity",
-				"Requesting vehicle with " + vehicleName);
+		Log.d("SwipeActivity", "Requesting vehicle with " + vehicleName);
 		// Send a vehicle request that gets the default vehicle
-		VehicleRequest req = new VehicleRequest(this);
+		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(
 					new BasicNameValuePair(Constants.REQUEST_TYPE,
@@ -328,28 +337,52 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void saveVehicleDataToSharedPreferences() {
 		Log.d("SwipeActivity", "saveVehicleDataToSharedPreferences");
 		SharedPreferences prefs = getSharedPreferences(
 				LoginActivity.PREFERENCES, MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString(Constants.VEHICLE_NAME, vehicleName);
-		editor.putString(Constants.VEHICLE_NAME, SwipeActivity.this.vehicleName);
-		editor.putInt(Constants.VEHICLE_YEAR, SwipeActivity.this.vehicleYear);
-		editor.putString(Constants.VEHICLE_MAKE, SwipeActivity.this.vehicleMake);
-		editor.putString(Constants.VEHICLE_MODEL,
-				SwipeActivity.this.vehicleModel);
-		editor.putInt(Constants.VEHICLE_TYPE_ID, SwipeActivity.this.vehicleType);
-		editor.putInt(Constants.VEHICLE_DISTANCE_UNIT,
-				SwipeActivity.this.vehicleDistanceUnit);
-		editor.putInt(Constants.VEHICLE_QUANTITY_UNIT,
-				SwipeActivity.this.vehicleQuantityUnit);
-		editor.putInt(Constants.VEHICLE_CONSUMPTION_UNIT,
-				SwipeActivity.this.vehicleConsumptionUnit);
-		editor.putString(Constants.VEHICLE_CURRENCY,
-				SwipeActivity.this.vehicleCurrency);
+		editor.putInt(Constants.VEHICLE_YEAR, vehicleYear);
+		editor.putString(Constants.VEHICLE_MAKE, vehicleMake);
+		editor.putString(Constants.VEHICLE_MODEL, vehicleModel);
+		editor.putInt(Constants.VEHICLE_TYPE_ID, vehicleType);
+		editor.putInt(Constants.VEHICLE_DISTANCE_UNIT, vehicleDistanceUnit);
+		editor.putInt(Constants.VEHICLE_QUANTITY_UNIT, vehicleQuantityUnit);
+		editor.putInt(Constants.VEHICLE_CONSUMPTION_UNIT, vehicleConsumptionUnit);
+		editor.putString(Constants.VEHICLE_CURRENCY, vehicleCurrency);
 		editor.putLong(Constants.VEHICLE_KEY, vehicleID);
 		editor.commit();
+	}
+	
+	/**
+	 * Called to restore all saved shared preferences.
+	 */
+	private void restoreVehicleDataFromSharedPreferences() {
+		Log.d("SwipeActivity", "saveVehicleDataToSharedPreferences");
+		SharedPreferences prefs = getSharedPreferences(
+				LoginActivity.PREFERENCES, MODE_PRIVATE);
+		
+		userName = prefs.getString(Constants.LOGIN_NAME, null);
+		
+		vehicleName = prefs.getString(Constants.VEHICLE_NAME, null);
+		vehicleName = prefs.getString(Constants.VEHICLE_NAME, null);
+		vehicleYear = prefs.getInt(Constants.VEHICLE_YEAR, 0);
+		vehicleMake = prefs.getString(Constants.VEHICLE_MAKE, null);
+		vehicleModel = prefs.getString(Constants.VEHICLE_MODEL, null);
+		vehicleType = prefs.getInt(Constants.VEHICLE_TYPE_ID, 0);
+		vehicleDistanceUnit = prefs.getInt(Constants.VEHICLE_DISTANCE_UNIT, 0);
+		vehicleQuantityUnit = prefs.getInt(Constants.VEHICLE_QUANTITY_UNIT, 0);
+		vehicleConsumptionUnit = prefs.getInt(Constants.VEHICLE_CONSUMPTION_UNIT, 0);
+		vehicleCurrency = prefs.getString(Constants.VEHICLE_CURRENCY, null);
+		vehicleID = prefs.getLong(Constants.VEHICLE_KEY, 0);
+	}
+
+	private void setNavigationListAdapter(ArrayList<String> vehicles) {
+		mSpinnerAdapter = new ArrayAdapter<String>(getActionBar()
+				.getThemedContext(),
+				android.R.layout.simple_spinner_dropdown_item, vehicles);
+		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
 	}
 }

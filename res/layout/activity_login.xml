@@ -4,41 +4,28 @@
     android:layout_height="fill_parent">
     
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dip" >
-        <!--  View Title Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:text="LOGIN"
-            android:textSize="25dip"
-            android:textStyle="bold" />
-        <!--  Name Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Name" />
+        style="@style/LoginContainer"
+        android:orientation="vertical" >
+
         <!--  Name TextField -->
         <EditText
             android:id="@+id/edt_login_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
- 
-        <!--  Password Label -->
-        <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="Password" />
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="Name" />
+ 
         <!--  Password TextField -->
         <EditText
             android:id="@+id/edt_login_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:password="true" />
+            android:hint="Password"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="textPassword" />
  
         <!--  Error message -->
 
@@ -47,21 +34,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remember me" />
-
-        <TextView android:id="@+id/tv_login_error"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#e30000"
-                    android:padding="10dip"
-                    android:textStyle="bold"/>
  
         <!--  Login Button -->
 
         <Button
             android:id="@+id/btn_login_login"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="16dip"
+            android:layout_gravity="right"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:text="Login" />
     </LinearLayout>
  

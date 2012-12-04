@@ -17,12 +17,12 @@ import de.timoklostermann.refuel.util.Constants;
  * @author Timo Klostermann
  * 
  */
-public class VehicleRequest extends RequestTask {
+public class VehicleRequestTask extends RequestTask {
 	private ProgressDialog progress;
 
 	RequestCallback callback;
 
-	public VehicleRequest(RequestCallback callback) {
+	public VehicleRequestTask(RequestCallback callback) {
 		super();
 
 		this.callback = callback;
