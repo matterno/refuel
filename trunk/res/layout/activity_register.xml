@@ -4,67 +4,50 @@
     android:layout_height="fill_parent" >
  
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dip" >
+        style="@style/LoginContainer"
+        android:orientation="vertical" >
 
-        <!--  Name Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_tv_name" />
         <!--  Name TextField -->
         <EditText
             android:id="@+id/edt_register_name"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"
+            android:hint="@string/register_tv_name" />
  
-        <!--  Email Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_tv_email" />
         <!--  Email TextField -->
         <EditText
             android:id="@+id/edt_register_email"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:hint="@string/register_tv_email" />
  
-        <!--  Password Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="@string/register_tv_password" />
         <!--  Password TextField -->
         <EditText
             android:id="@+id/edt_register_password"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:hint="@string/register_tv_password" />
  
-        <!--  Password Repeat Label -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="@string/register_tv_password_repeat" />
         <!--  Password TextField -->
         <EditText
             android:id="@+id/edt_register_password_repeat"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:hint="@string/register_tv_password_repeat" />
  
         <!--  Register Button -->
         <Button
             android:id="@+id/btn_register_register"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="right"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
             android:text="Register" />
     </LinearLayout>
  

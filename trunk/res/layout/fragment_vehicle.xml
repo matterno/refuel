@@ -1,163 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <!-- Helper View -->
-    <View
-        android:id="@+id/half_screen_helper"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
-    
-    <!-- Vehicle Information -->
-    <TextView
-        android:id="@+id/tv_vehicle_information"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="@string/vehicle_tv_information"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <EditText
-        android:id="@+id/edt_vehicle_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/half_screen_helper"
-        android:layout_below="@+id/tv_vehicle_information"
-        android:hint="@string/vehicle_edt_name"
-        android:inputType="text" />
+    <LinearLayout
+        style="@style/VehicleContainer"
+        android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/edt_vehicle_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_vehicle_information"
-        android:layout_toRightOf="@+id/edt_vehicle_name"
-        android:hint="@string/vehicle_edt_year"
-        android:inputType="number" />
+        <!-- Vehicle Information -->
 
-    <EditText
-        android:id="@+id/edt_vehicle_make"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/half_screen_helper"
-        android:layout_below="@+id/edt_vehicle_name"
-        android:hint="@string/vehicle_edt_make"
-        android:inputType="text" />
+        <TextView
+            android:id="@+id/tv_vehicle_information"
+            style="@style/sectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_tv_information" />
 
-    <EditText
-        android:id="@+id/edt_vehicle_model"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/edt_vehicle_year"
-        android:layout_toRightOf="@+id/edt_vehicle_make"
-        android:hint="@string/vehicle_edt_model"
-        android:inputType="text" />
+        <EditText
+            android:id="@+id/edt_vehicle_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vehicle_edt_name"
+            android:inputType="text" />
 
-    <!-- Vehicle settings -->
-    <TextView
-        android:id="@+id/tv_vehicle_settings"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_vehicle_model"
-        android:gravity="center"
-        android:text="@string/vehicle_tv_settings"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <EditText
+            android:id="@+id/edt_vehicle_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vehicle_edt_year"
+            android:inputType="number" />
 
-    <!-- Distance -->
-    
-    <TextView
-        android:id="@+id/tv_vehicle_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sp_vehicle_distance"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_vehicle_settings"
-        android:layout_toLeftOf="@+id/sp_vehicle_distance"
-        android:gravity="center_vertical"
-        android:text="@string/vehicle_tv_distance" />
+        <EditText
+            android:id="@+id/edt_vehicle_make"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vehicle_edt_make"
+            android:inputType="text" />
 
-    <Spinner
-        android:id="@+id/sp_vehicle_distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_vehicle_settings"
-        android:layout_alignLeft="@+id/half_screen_helper"
-        android:entries="@array/array_distance" />
+        <EditText
+            android:id="@+id/edt_vehicle_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vehicle_edt_model"
+            android:inputType="text" />
 
-    <!-- Quantity -->
+        <!-- Vehicle settings -->
 
-    <TextView
-        android:id="@+id/tv_vehicle_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sp_vehicle_quantity"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sp_vehicle_distance"
-        android:layout_toLeftOf="@+id/sp_vehicle_quantity"
-        android:gravity="center_vertical"
-        android:text="@string/vehicle_tv_quantity" />
-    
-    <Spinner
-        android:id="@+id/sp_vehicle_quantity"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignLeft="@+id/half_screen_helper"
-        android:layout_below="@+id/sp_vehicle_distance"
-        android:entries="@array/array_quantity" />
+        <TextView
+            android:id="@+id/tv_vehicle_settings"
+            style="@style/sectionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_tv_settings" />
 
-    <!-- Consupmtion -->
+        <!-- Distance -->
 
-    <TextView
-        android:id="@+id/tv_vehicle_consumption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sp_vehicle_consumption"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sp_vehicle_quantity"
-        android:layout_toLeftOf="@+id/sp_vehicle_consumption"
-        android:gravity="center_vertical"
-        android:text="@string/vehicle_tv_consumption" />
-    
-    <Spinner
-        android:id="@+id/sp_vehicle_consumption"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/sp_vehicle_quantity"
-        android:layout_alignLeft="@+id/half_screen_helper"
-        android:entries="@array/array_consumption" />
+        <Spinner
+            android:id="@+id/sp_vehicle_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/array_distance" />
 
-    <!-- Currency -->
+        <!-- Quantity -->
 
-    <TextView
-        android:id="@+id/tv_vehicle_currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/edt_vehicle_currency"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sp_vehicle_consumption"
-        android:layout_toLeftOf="@+id/edt_vehicle_currency"
-        android:gravity="center_vertical"
-        android:text="@string/vehicle_tv_currency" />
+        <Spinner
+            android:id="@+id/sp_vehicle_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/array_quantity" />
 
-    <EditText
-        android:id="@+id/edt_vehicle_currency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/half_screen_helper"
-        android:layout_below="@+id/sp_vehicle_consumption"
-        android:ems="2"
-        android:maxEms="4"
-        android:inputType="text"
-        android:text="@string/vehicle_edt_currency" />
-    
-</RelativeLayout>
+        <!-- Consupmtion -->
+
+        <Spinner
+            android:id="@+id/sp_vehicle_consumption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/array_consumption" />
+
+        <!-- Currency -->
+
+        <TextView
+            android:id="@+id/tv_vehicle_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/vehicle_tv_currency" />
+
+        <EditText
+            android:id="@+id/edt_vehicle_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:inputType="text"
+            android:text="@string/vehicle_edt_currency" />
+    </LinearLayout>
+
+</ScrollView>

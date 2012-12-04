@@ -139,7 +139,6 @@ public class LoginActivity extends Activity implements RequestCallback {
 			}
 		} catch (Exception e) {
 			Log.e("LoginActivity", "Error in onRequestComplete()");
-			e.printStackTrace();
 			Toast.makeText(LoginActivity.this,
 					getResources().getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();

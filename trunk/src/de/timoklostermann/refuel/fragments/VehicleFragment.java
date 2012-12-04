@@ -8,7 +8,7 @@ import de.timoklostermann.refuel.NewVehicleActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.SwipeActivity;
 import de.timoklostermann.refuel.interfaces.RequestCallback;
-import de.timoklostermann.refuel.net.VehicleRequest;
+import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
 import android.app.Activity;
 import android.content.Context;
@@ -189,7 +189,7 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 
 	private void saveVehicle() {
 		// Send a vehicle request that saves the vehicle
-		VehicleRequest req = new VehicleRequest(this);
+		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
 					Constants.REQUEST_TYPE_VEHICLE_SAVE + ""),
@@ -221,7 +221,7 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 	
 	private void updateVehicle() {
 		// Send a vehicle request that saves the vehicle
-		VehicleRequest req = new VehicleRequest(this);
+		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
 					Constants.REQUEST_TYPE_VEHICLE_UPDATE + ""),
