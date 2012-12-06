@@ -10,7 +10,6 @@ import de.timoklostermann.refuel.SwipeActivity;
 import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

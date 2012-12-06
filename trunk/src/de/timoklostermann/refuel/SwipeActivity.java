@@ -130,7 +130,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 		Log.d("SwipeActivity", "onNavigationItemSelected");
 		
 		// If the choosen list item is the same, do nothing
-		if(!vehicleName.equals(vehicles.get(itemPosition))) {
+		if(!vehicles.get(itemPosition).equals(vehicleName)) {
 			vehicleName = vehicles.get(itemPosition);
 
 			// save Name in SharedPreferences
