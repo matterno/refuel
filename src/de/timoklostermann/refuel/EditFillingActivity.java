@@ -24,8 +24,6 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_filling);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 		btn_date = (Button) this.findViewById(R.id.btn_new_filling_date);
 
 		Calendar c = Calendar.getInstance();
@@ -57,7 +55,6 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
 		case R.id.menu_edit_filling_save:
 			Intent intent = new Intent(this, SwipeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
