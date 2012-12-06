@@ -1,5 +1,8 @@
 package de.timoklostermann.refuel.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
@@ -13,6 +16,7 @@ import de.timoklostermann.refuel.util.Constants;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,8 +26,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 public class VehicleFragment extends Fragment implements RequestCallback {
@@ -68,6 +74,12 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 				.findViewById(R.id.sp_vehicle_consumption);
 		edt_currency = (EditText) view.findViewById(R.id.edt_vehicle_currency);
 
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, list);
+		sp_distanceUnit.setAdapter(adapter);
+		
 		return view;
 	}
 

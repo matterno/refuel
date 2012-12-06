@@ -73,7 +73,7 @@
     
     <string name="vehicle_tv_information">Information</string>
     <string name="vehicle_tv_settings">Units</string>
-    <string name="vehicle_tv_currency">Currency</string>
+    <string name="vehicle_tv_currency">Currency Symbol</string>
     <string name="vehicle_edt_name">Name</string>
     <string name="vehicle_edt_year">Year</string>
     <string name="vehicle_edt_make">Make</string>

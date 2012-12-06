@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
     
@@ -22,5 +22,13 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">#FF8800</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    
+    <style name="SpinnerItem" parent="@android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="textSizeNormal">
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
