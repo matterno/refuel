@@ -11,9 +11,11 @@
 
         <LinearLayout
             android:id="@+id/ll_statistics_consumption"
-            style="@style/VehicleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="16dp" >
 
             <TextView
                 style="@style/sectionHeader"
@@ -33,15 +35,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        style="@style/textSizeNormal"
                         android:text="@string/statistics_tv_average" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_average"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -52,15 +52,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_worst"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_worst" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_worst"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -71,15 +69,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_best"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_best" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_best"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
             </TableLayout>
 
@@ -101,15 +97,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_average"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_average" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_average"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -120,15 +114,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_worst"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_worst" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_worst"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -139,23 +131,23 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_best"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_best" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_best"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
 
         <LinearLayout
-            style="@style/VehicleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="16dp" >
 
             <TextView
                 style="@style/sectionHeader"
@@ -175,15 +167,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_average"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_average" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_average"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -194,15 +184,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_worst"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_worst" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_worst"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
 
                 <TableRow
@@ -213,15 +201,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
-                        android:text="@string/statistics_tv_best"
-                        style="@style/textSizeNormal" />
+                        android:text="@string/statistics_tv_best" />
 
                     <TextView
                         android:id="@+id/tv_statistics_fuel_best"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        android:layout_weight="3" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
