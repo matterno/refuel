@@ -22,11 +22,11 @@
                 android:text="@string/statistics_tv_consumption" />
 
             <TableLayout
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -41,11 +41,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        style="@style/textSizeNormal" />
+                        style="@style/textSizeNormal"
+                        android:text="hallo" />
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -64,7 +65,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -94,7 +95,7 @@
                 android:layout_height="wrap_content" >
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -113,7 +114,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -132,7 +133,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -168,7 +169,7 @@
                 android:layout_height="wrap_content" >
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -187,7 +188,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView
@@ -206,7 +207,7 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="400dp"
                     android:layout_height="wrap_content" >
 
                     <TextView

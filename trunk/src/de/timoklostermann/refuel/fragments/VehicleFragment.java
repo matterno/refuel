@@ -13,6 +13,7 @@ import de.timoklostermann.refuel.SwipeActivity;
 import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
+import de.timoklostermann.refuel.util.Unit;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,6 +53,8 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 
 	private long vehicleId;
 	
+	private Unit[] consumptionUnits;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -75,8 +78,25 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		List<String> list = new ArrayList<String>();
 		list.add("1");
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, list);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_distanceUnit.setAdapter(adapter);
+		
+		
+		consumptionUnits = new Unit[] {
+				new Unit(Constants.CONSUMPTION_UNIT_MPG, getString(R.string.consumption_unit_mpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPG, getString(R.string.consumption_unit_kpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPIG, getString(R.string.consumption_unit_mpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPIG, getString(R.string.consumption_unit_kpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPL, getString(R.string.consumption_unit_mpl)),
+				new Unit(Constants.CONSUMPTION_UNIT_GP100KM, getString(R.string.consumption_unit_gp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_LP100KM, getString(R.string.consumption_unit_lp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_IGP100KM, getString(R.string.consumption_unit_igp100km))};
+		
+		ArrayAdapter<Unit> consumptionAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, consumptionUnits);
+		consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_consumptionUnit.setAdapter(consumptionAdapter);
+		
 		
 		return view;
 	}

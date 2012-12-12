@@ -10,6 +10,15 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register">Register</string>
 
+    <string name="consumption_unit_mpg">Miles per Gallon</string>
+    <string name="consumption_unit_kpg">Kilometers per Gallon</string>
+    <string name="consumption_unit_mpig">Miles per Imp. Gallon</string>
+    <string name="consumption_unit_kpig">Kilometers per Imp. Gallon</string>
+    <string name="consumption_unit_mpl">Miles per Liter</string>
+    <string name="consumption_unit_gp100km">Gallons per 100 Kilometers</string>
+    <string name="consumption_unit_lp100km">Liter per 100 Kilometers</string>
+    <string name="consumption_unit_igp100km">Imp. Gallons per 100 Kilometers</string>
+    
     <string-array name="array_consumption">
         <item>Miles per Gallon</item>
         <item>Kilometers per Gallon</item>
