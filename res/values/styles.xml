@@ -24,10 +24,6 @@
         <item name="android:textSize">18sp</item>
     </style>
     
-    <style name="SpinnerItem" parent="@android:TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:textSize">14sp</item>
-    </style>
-    
     <style name="textSizeNormal">
         <item name="android:textSize">14sp</item>
     </style>

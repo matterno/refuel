@@ -1,11 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/VehicleContainer" >
+    android:id="@+id/listView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="16dp" >
 
-    <fragment
-        android:id="@+id/fragment_list_filling"
-        android:name="de.timoklostermann.refuel.fragments.FillingListFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</RelativeLayout>
+</ListView>

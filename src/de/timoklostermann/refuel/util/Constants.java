@@ -41,4 +41,13 @@ public interface Constants {
 	public static final int ERROR_PW_WRONG = 5;
 	
 	public static final int ERROR_VEHICLE_EXISTS_NOT = 6;
+	
+	public static final int CONSUMPTION_UNIT_MPG = 0;
+	public static final int CONSUMPTION_UNIT_KPG = 1;
+	public static final int CONSUMPTION_UNIT_MPIG = 2;
+	public static final int CONSUMPTION_UNIT_KPIG = 3;
+	public static final int CONSUMPTION_UNIT_MPL = 4;
+	public static final int CONSUMPTION_UNIT_GP100KM = 5;
+	public static final int CONSUMPTION_UNIT_LP100KM = 6;
+	public static final int CONSUMPTION_UNIT_IGP100KM = 7;
 }
