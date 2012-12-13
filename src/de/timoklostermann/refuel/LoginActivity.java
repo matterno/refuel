@@ -64,6 +64,8 @@ public class LoginActivity extends Activity implements RequestCallback {
 					return;
 				}
 
+				LoginActivity.this.setSharedPrefs();
+				
 				// Send a login request
 				LoginRequest req = new LoginRequest(LoginActivity.this);
 				try {
@@ -104,6 +106,10 @@ public class LoginActivity extends Activity implements RequestCallback {
 	protected void onStop() {
 		super.onStop();
 
+		this.setSharedPrefs();
+	}
+
+	private void setSharedPrefs() {
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
