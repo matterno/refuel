@@ -19,6 +19,28 @@
     <string name="consumption_unit_lp100km">Liter per 100 Kilometers</string>
     <string name="consumption_unit_igp100km">Imp. Gallons per 100 Kilometers</string>
     
+    <string name="distance_unit_kilometers">Kilometers</string>
+    <string name="distance_unit_miles">Miles</string>
+    
+    <string name="quantity_liters">Liters</string>
+    <string name="quantity_gallons">Gallons</string>
+    <string name="quantity_imperial_gallons">Imp. Gallons</string>
+    
+    <string name="fuel_type_unleaded">Unleaded</string>
+    <string name="fuel_type_premium_unleaded_95">Premium Unleaded 95</string>
+    <string name="fuel_type_premium_unleaded_100">Premium Unleaded 100</string>
+    <string name="fuel_type_super_unleaded">Super Unleaded</string>
+    <string name="fuel_type_super_plus_unleaded">Super Plus Unleaded</string>
+    <string name="fuel_type_e10">E10</string>
+    <string name="fuel_type_bio_ethanol">Bio-Ethanol</string>
+    <string name="fuel_type_bio_diesel">Bio-Diesel</string>
+    <string name="fuel_type_diesel">Diesel</string>
+    <string name="fuel_type_premium_diesel">Premium Diesel</string>
+    <string name="fuel_type_vegetable_oil">Vegetable Oil</string>
+    <string name="fuel_type_lpg">LPG</string>
+    <string name="fuel_type_cngh">CNGH</string>
+    <string name="fuel_type_cngl">CNGL</string>
+    
     <string-array name="array_consumption">
         <item>Miles per Gallon</item>
         <item>Kilometers per Gallon</item>

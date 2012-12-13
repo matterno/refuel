@@ -50,4 +50,26 @@ public interface Constants {
 	public static final int CONSUMPTION_UNIT_GP100KM = 5;
 	public static final int CONSUMPTION_UNIT_LP100KM = 6;
 	public static final int CONSUMPTION_UNIT_IGP100KM = 7;
+	
+	public static final int DISTANCE_UNIT_KILOMETERS = 0;
+	public static final int DISTANCE_UNIT_MILES = 1;
+	
+	public static final int QUANTITY_UNIT_LITERS = 0;
+	public static final int QUANTITY_UNIT_GALLONS = 1;
+	public static final int QUANTITY_UNIT_IMPERIAL_GALLONS = 2;
+	
+	public static final int FUEL_TYPE_UNIT_UNLEADED = 0;
+	public static final int FUEL_TYPE_UNIT_PREMIUM_UNLEADED_95 = 1;
+	public static final int FUEL_TYPE_UNIT_PREMIUM_UNLEADED_100 = 2;
+	public static final int FUEL_TYPE_UNIT_SUPER_UNLEADED = 3;
+	public static final int FUEL_TYPE_UNIT_SUPER_PLUS_UNLEADED = 4;
+	public static final int FUEL_TYPE_UNIT_E10 = 5;
+	public static final int FUEL_TYPE_UNIT_BIO_ETHANOL = 6;
+	public static final int FUEL_TYPE_UNIT_BIO_DIESEL = 7;
+	public static final int FUEL_TYPE_UNIT_DIESEL = 8;
+	public static final int FUEL_TYPE_UNIT_PREMIUM_DIESEL = 9;
+	public static final int FUEL_TYPE_UNIT_VEGETABLE_OIL = 10;
+	public static final int FUEL_TYPE_UNIT_LPG = 11;
+	public static final int FUEL_TYPE_UNIT_CNGH = 12;
+	public static final int FUEL_TYPE_UNIT_CNGL = 13;
 }

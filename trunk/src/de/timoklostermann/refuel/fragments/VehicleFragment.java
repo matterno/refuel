@@ -1,8 +1,5 @@
 package de.timoklostermann.refuel.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
@@ -55,6 +52,10 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 	
 	private Unit[] consumptionUnits;
 	
+	private Unit[] distanceUnits;
+	
+	private Unit[] quantityUnits;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -74,29 +75,22 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		sp_consumptionUnit = (Spinner) view
 				.findViewById(R.id.sp_vehicle_consumption);
 		edt_currency = (EditText) view.findViewById(R.id.edt_vehicle_currency);
-
-		List<String> list = new ArrayList<String>();
-		list.add("1");
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		sp_distanceUnit.setAdapter(adapter);
-		
-		
-		consumptionUnits = new Unit[] {
-				new Unit(Constants.CONSUMPTION_UNIT_MPG, getString(R.string.consumption_unit_mpg)),
-				new Unit(Constants.CONSUMPTION_UNIT_KPG, getString(R.string.consumption_unit_kpg)),
-				new Unit(Constants.CONSUMPTION_UNIT_MPIG, getString(R.string.consumption_unit_mpig)),
-				new Unit(Constants.CONSUMPTION_UNIT_KPIG, getString(R.string.consumption_unit_kpig)),
-				new Unit(Constants.CONSUMPTION_UNIT_MPL, getString(R.string.consumption_unit_mpl)),
-				new Unit(Constants.CONSUMPTION_UNIT_GP100KM, getString(R.string.consumption_unit_gp100km)),
-				new Unit(Constants.CONSUMPTION_UNIT_LP100KM, getString(R.string.consumption_unit_lp100km)),
-				new Unit(Constants.CONSUMPTION_UNIT_IGP100KM, getString(R.string.consumption_unit_igp100km))};
+		consumptionUnits = this.getConsumtionUnits();
+		quantityUnits = this.getQuantityUnits();
+		distanceUnits = this.getDistanceUnits();
 		
 		ArrayAdapter<Unit> consumptionAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, consumptionUnits);
 		consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_consumptionUnit.setAdapter(consumptionAdapter);
 		
+		ArrayAdapter<Unit> quantityAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, quantityUnits);
+		quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_quantityUnit.setAdapter(quantityAdapter);
+		
+		ArrayAdapter<Unit> distanceAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, distanceUnits);
+		distanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_distanceUnit.setAdapter(distanceAdapter);
 		
 		return view;
 	}
@@ -279,5 +273,30 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 					getResources().getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	private Unit[] getConsumtionUnits() {
+		return new Unit[] {
+				new Unit(Constants.CONSUMPTION_UNIT_MPG, getString(R.string.consumption_unit_mpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPG, getString(R.string.consumption_unit_kpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPIG, getString(R.string.consumption_unit_mpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPIG, getString(R.string.consumption_unit_kpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPL, getString(R.string.consumption_unit_mpl)),
+				new Unit(Constants.CONSUMPTION_UNIT_GP100KM, getString(R.string.consumption_unit_gp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_LP100KM, getString(R.string.consumption_unit_lp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_IGP100KM, getString(R.string.consumption_unit_igp100km))};
+	}
+	
+	private Unit[] getDistanceUnits() {
+		return new Unit[] {
+				new Unit(Constants.DISTANCE_UNIT_KILOMETERS, getString(R.string.distance_unit_kilometers)),
+				new Unit(Constants.DISTANCE_UNIT_MILES, getString(R.string.distance_unit_miles))};
+	}
+	
+	private Unit[] getQuantityUnits() {
+		return new Unit[] {
+				new Unit(Constants.QUANTITY_UNIT_LITERS, getString(R.string.quantity_liters)),
+				new Unit(Constants.QUANTITY_UNIT_GALLONS, getString(R.string.quantity_gallons)),
+				new Unit(Constants.QUANTITY_UNIT_IMPERIAL_GALLONS, getString(R.string.quantity_imperial_gallons))};
 	}
 }
