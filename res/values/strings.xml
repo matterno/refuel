@@ -136,6 +136,7 @@
     <string name="register_error_user_found">This user already exists!</string>
     
     <string name="vehicle_error_not_found">Found no vehicle</string>
+    <string name="vehicle_error_exists">Vehicle with this name already exists!</string>
     
     <string name="error_input">Please check your input</string>
     

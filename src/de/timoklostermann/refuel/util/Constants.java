@@ -41,6 +41,7 @@ public interface Constants {
 	public static final int ERROR_PW_WRONG = 5;
 	
 	public static final int ERROR_VEHICLE_EXISTS_NOT = 6;
+	public static final int ERROR_VEHICLE_EXISTS = 7;
 	
 	public static final int CONSUMPTION_UNIT_MPG = 0;
 	public static final int CONSUMPTION_UNIT_KPG = 1;
