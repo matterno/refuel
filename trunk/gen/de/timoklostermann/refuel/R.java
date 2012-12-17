@@ -111,9 +111,9 @@ public final class R {
         public static final int edit_filling_tv_fuelType=0x7f040034;
         public static final int edit_filling_tv_information=0x7f04002e;
         public static final int empty=0x7f04002b;
-        public static final int error_input=0x7f040050;
-        public static final int error_no_connection=0x7f040051;
-        public static final int error_unexpected=0x7f040052;
+        public static final int error_input=0x7f040051;
+        public static final int error_no_connection=0x7f040052;
+        public static final int error_unexpected=0x7f040053;
         public static final int fuel_type_bio_diesel=0x7f04001d;
         public static final int fuel_type_bio_ethanol=0x7f04001c;
         public static final int fuel_type_cngh=0x7f040022;
@@ -130,7 +130,7 @@ public final class R {
         public static final int fuel_type_vegetable_oil=0x7f040020;
         public static final int login_error_user_exists_not=0x7f04004d;
         public static final int login_error_wrong_password=0x7f04004c;
-        public static final int login_processing=0x7f040053;
+        public static final int login_processing=0x7f040054;
         public static final int login_tv_name=0x7f040040;
         public static final int login_tv_password=0x7f040041;
         public static final int menu_add=0x7f040028;
@@ -146,7 +146,7 @@ public final class R {
         public static final int quantity_imperial_gallons=0x7f040015;
         public static final int quantity_liters=0x7f040013;
         public static final int register_error_user_found=0x7f04004e;
-        public static final int register_processing=0x7f040054;
+        public static final int register_processing=0x7f040055;
         public static final int register_tv_email=0x7f040043;
         public static final int register_tv_name=0x7f040042;
         public static final int register_tv_password=0x7f040044;
@@ -171,6 +171,7 @@ public final class R {
         public static final int vehicle_edt_model=0x7f04003b;
         public static final int vehicle_edt_name=0x7f040038;
         public static final int vehicle_edt_year=0x7f040039;
+        public static final int vehicle_error_exists=0x7f040050;
         public static final int vehicle_error_not_found=0x7f04004f;
         public static final int vehicle_getting=0x7f04003f;
         public static final int vehicle_saving=0x7f04003e;

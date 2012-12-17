@@ -11,6 +11,7 @@ import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
 import de.timoklostermann.refuel.util.Unit;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,13 +50,15 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 	private String userName;
 
 	private long vehicleId;
-	
+
 	private Unit[] consumptionUnits;
-	
+
 	private Unit[] distanceUnits;
-	
+
 	private Unit[] quantityUnits;
-	
+
+	private RequestCallback mCallbacks;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -75,23 +78,32 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		sp_consumptionUnit = (Spinner) view
 				.findViewById(R.id.sp_vehicle_consumption);
 		edt_currency = (EditText) view.findViewById(R.id.edt_vehicle_currency);
-		
+
 		consumptionUnits = this.getConsumtionUnits();
 		quantityUnits = this.getQuantityUnits();
 		distanceUnits = this.getDistanceUnits();
-		
-		ArrayAdapter<Unit> consumptionAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, consumptionUnits);
-		consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<Unit> consumptionAdapter = new ArrayAdapter<Unit>(
+				getActivity(), android.R.layout.simple_spinner_item,
+				consumptionUnits);
+		consumptionAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_consumptionUnit.setAdapter(consumptionAdapter);
-		
-		ArrayAdapter<Unit> quantityAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, quantityUnits);
-		quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<Unit> quantityAdapter = new ArrayAdapter<Unit>(
+				getActivity(), android.R.layout.simple_spinner_item,
+				quantityUnits);
+		quantityAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_quantityUnit.setAdapter(quantityAdapter);
-		
-		ArrayAdapter<Unit> distanceAdapter = new ArrayAdapter<Unit>(getActivity(), android.R.layout.simple_spinner_item, distanceUnits);
-		distanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<Unit> distanceAdapter = new ArrayAdapter<Unit>(
+				getActivity(), android.R.layout.simple_spinner_item,
+				distanceUnits);
+		distanceAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_distanceUnit.setAdapter(distanceAdapter);
-		
+
 		return view;
 	}
 
@@ -100,27 +112,36 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		SharedPreferences prefs = getActivity().getSharedPreferences(
 				LoginActivity.PREFERENCES, Context.MODE_PRIVATE);
 		userName = prefs.getString(Constants.LOGIN_NAME, "");
-		
+
 		if (getActivity() instanceof SwipeActivity) {
 			Log.d("onCreateView", "updateUI");
-			updateUI(
-					prefs.getString(Constants.VEHICLE_NAME, ""),
+			updateUI(prefs.getString(Constants.VEHICLE_NAME, ""),
 					prefs.getInt(Constants.VEHICLE_YEAR, 2000),
 					prefs.getString(Constants.VEHICLE_MAKE, ""),
 					prefs.getString(Constants.VEHICLE_MODEL, ""),
 					prefs.getString(Constants.VEHICLE_CURRENCY, ""),
 					prefs.getInt(Constants.VEHICLE_DISTANCE_UNIT, 0),
 					prefs.getInt(Constants.VEHICLE_QUANTITY_UNIT, 0),
-					prefs.getInt(Constants.VEHICLE_CONSUMPTION_UNIT, 0),
-					0); 
-			//TODO  prefs.getInt(Constants.VEHICLE_TYPE_ID, 0)		
-			vehicleId = prefs.getLong(
-					Constants.VEHICLE_KEY, 0);
+					prefs.getInt(Constants.VEHICLE_CONSUMPTION_UNIT, 0), 0);
+			// TODO prefs.getInt(Constants.VEHICLE_TYPE_ID, 0)
+			vehicleId = prefs.getLong(Constants.VEHICLE_KEY, 0);
 		}
-		
+
 		super.onResume();
 	}
-	
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		if (activity instanceof RequestCallback) {
+			mCallbacks = (RequestCallback) activity;
+		} else if (!(activity instanceof NewVehicleActivity)) {
+			throw new IllegalStateException(
+					"Activity must implement fragment's callbacks.");
+		}
+	}
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
@@ -138,7 +159,7 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 				return super.onOptionsItemSelected(item);
 			}
 
-			if(getActivity() instanceof SwipeActivity) {
+			if (getActivity() instanceof SwipeActivity) {
 				updateVehicle();
 			} else {
 				saveVehicle();
@@ -176,15 +197,42 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 	}
 
 	public void onRequestComplete(JSONObject obj) {
-		Toast.makeText(getActivity().getBaseContext(),
-				getResources().getString(R.string.vehicle_toast_saved),
-				Toast.LENGTH_SHORT).show();
 
-		if (getActivity() instanceof NewVehicleActivity) {
-			Intent intent = new Intent(getActivity(), SwipeActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(Constants.LOGIN_NAME, this.userName);
-			startActivity(intent);
+		try {
+			if (!obj.getBoolean(Constants.JSON_SUCCESS)) {
+				// Request not successful
+				switch (obj.getInt(Constants.JSON_ERROR)) {
+				// Error found
+				case Constants.ERROR_VEHICLE_EXISTS:
+					// If this vehicle already exists
+					Toast.makeText(getActivity().getBaseContext(),
+							getString(R.string.vehicle_error_exists),
+							Toast.LENGTH_SHORT).show();
+					break;
+				}
+				return;
+			}
+
+			switch (obj.getInt(Constants.REQUEST_TYPE)) {
+			case Constants.REQUEST_TYPE_VEHICLE_SAVE:
+				if (getActivity() instanceof NewVehicleActivity) {
+					Intent intent = new Intent(getActivity(),
+							SwipeActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent.putExtra(Constants.LOGIN_NAME, this.userName);
+					startActivity(intent);
+				}
+				break;
+			}
+
+		} catch (Exception e) {
+			Log.d("SwipeActivity", "Error in vehicle request");
+			e.printStackTrace();
+			Toast.makeText(getActivity().getBaseContext(),
+					getString(R.string.error_unexpected), Toast.LENGTH_SHORT)
+					.show();
+
+			// TODO Go to login
 		}
 	}
 
@@ -193,9 +241,12 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		return getActivity();
 	}
 
-	public void updateUI(String vehicleName, int vehicleYear, String vehicleMake, String vehicleModel, String vehicleCurrency, int vehicleDistanceUnit, int vehicleQuantityUnit, int vehicleConsumptionUnit, int vehicleType) {
+	public void updateUI(String vehicleName, int vehicleYear,
+			String vehicleMake, String vehicleModel, String vehicleCurrency,
+			int vehicleDistanceUnit, int vehicleQuantityUnit,
+			int vehicleConsumptionUnit, int vehicleType) {
 		Log.d("updateUI with vehicleName", vehicleName);
-		
+
 		edt_name.setText(vehicleName);
 		edt_year.setText(vehicleYear + "");
 		edt_make.setText(vehicleMake);
@@ -204,9 +255,8 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		sp_distanceUnit.setSelection(vehicleDistanceUnit);
 		sp_quantityUnit.setSelection(vehicleQuantityUnit);
 		sp_consumptionUnit.setSelection(vehicleConsumptionUnit);
-		
-		
-		//TODO
+
+		// TODO
 		// sp_vehicleType.setSelectedItem(vehicleType);
 	}
 
@@ -241,18 +291,18 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void updateVehicle() {
 		// Send a vehicle request that saves the vehicle
-		VehicleRequestTask req = new VehicleRequestTask(this);
+		VehicleRequestTask req = new VehicleRequestTask(mCallbacks);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
 					Constants.REQUEST_TYPE_VEHICLE_UPDATE + ""),
 					new BasicNameValuePair(Constants.USER_NAME, this.userName),
 					new BasicNameValuePair(Constants.VEHICLE_MAKE, edt_make
-							.getText().toString()), new BasicNameValuePair(
-							Constants.VEHICLE_MODEL, edt_model.getText()
-									.toString()),
+							.getText().toString()),
+					new BasicNameValuePair(Constants.VEHICLE_MODEL, edt_model
+							.getText().toString()),
 					new BasicNameValuePair(Constants.VEHICLE_NAME, edt_name
 							.getText().toString()),
 					new BasicNameValuePair(Constants.VEHICLE_YEAR, edt_year
@@ -266,7 +316,8 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 							sp_consumptionUnit.getSelectedItemId() + ""),
 					new BasicNameValuePair(Constants.VEHICLE_CURRENCY,
 							edt_currency.getText().toString()),
-					new BasicNameValuePair(Constants.VEHICLE_KEY, vehicleId + ""));
+					new BasicNameValuePair(Constants.VEHICLE_KEY, vehicleId
+							+ ""));
 		} catch (Exception e) {
 			Log.d("VehicleFragment", "unexpected error");
 			Toast.makeText(getActivity(),
@@ -274,29 +325,42 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private Unit[] getConsumtionUnits() {
 		return new Unit[] {
-				new Unit(Constants.CONSUMPTION_UNIT_MPG, getString(R.string.consumption_unit_mpg)),
-				new Unit(Constants.CONSUMPTION_UNIT_KPG, getString(R.string.consumption_unit_kpg)),
-				new Unit(Constants.CONSUMPTION_UNIT_MPIG, getString(R.string.consumption_unit_mpig)),
-				new Unit(Constants.CONSUMPTION_UNIT_KPIG, getString(R.string.consumption_unit_kpig)),
-				new Unit(Constants.CONSUMPTION_UNIT_MPL, getString(R.string.consumption_unit_mpl)),
-				new Unit(Constants.CONSUMPTION_UNIT_GP100KM, getString(R.string.consumption_unit_gp100km)),
-				new Unit(Constants.CONSUMPTION_UNIT_LP100KM, getString(R.string.consumption_unit_lp100km)),
-				new Unit(Constants.CONSUMPTION_UNIT_IGP100KM, getString(R.string.consumption_unit_igp100km))};
+				new Unit(Constants.CONSUMPTION_UNIT_MPG,
+						getString(R.string.consumption_unit_mpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPG,
+						getString(R.string.consumption_unit_kpg)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPIG,
+						getString(R.string.consumption_unit_mpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_KPIG,
+						getString(R.string.consumption_unit_kpig)),
+				new Unit(Constants.CONSUMPTION_UNIT_MPL,
+						getString(R.string.consumption_unit_mpl)),
+				new Unit(Constants.CONSUMPTION_UNIT_GP100KM,
+						getString(R.string.consumption_unit_gp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_LP100KM,
+						getString(R.string.consumption_unit_lp100km)),
+				new Unit(Constants.CONSUMPTION_UNIT_IGP100KM,
+						getString(R.string.consumption_unit_igp100km)) };
 	}
-	
+
 	private Unit[] getDistanceUnits() {
 		return new Unit[] {
-				new Unit(Constants.DISTANCE_UNIT_KILOMETERS, getString(R.string.distance_unit_kilometers)),
-				new Unit(Constants.DISTANCE_UNIT_MILES, getString(R.string.distance_unit_miles))};
+				new Unit(Constants.DISTANCE_UNIT_KILOMETERS,
+						getString(R.string.distance_unit_kilometers)),
+				new Unit(Constants.DISTANCE_UNIT_MILES,
+						getString(R.string.distance_unit_miles)) };
 	}
-	
+
 	private Unit[] getQuantityUnits() {
 		return new Unit[] {
-				new Unit(Constants.QUANTITY_UNIT_LITERS, getString(R.string.quantity_liters)),
-				new Unit(Constants.QUANTITY_UNIT_GALLONS, getString(R.string.quantity_gallons)),
-				new Unit(Constants.QUANTITY_UNIT_IMPERIAL_GALLONS, getString(R.string.quantity_imperial_gallons))};
+				new Unit(Constants.QUANTITY_UNIT_LITERS,
+						getString(R.string.quantity_liters)),
+				new Unit(Constants.QUANTITY_UNIT_GALLONS,
+						getString(R.string.quantity_gallons)),
+				new Unit(Constants.QUANTITY_UNIT_IMPERIAL_GALLONS,
+						getString(R.string.quantity_imperial_gallons)) };
 	}
 }
