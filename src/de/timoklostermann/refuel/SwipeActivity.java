@@ -226,11 +226,12 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 				// Save the attributes to shared preferences
 				saveVehicleDataToSharedPreferences();
 
+				// TODO Get Filling data
+				// save filling data
+				
 				// Call the adapter that data has changed, so that it can
 				// rebuild the view.
 				mSectionsPagerAdapter.notifyDataSetChanged();
-
-				// TODO Get Filling data
 				break;
 			case Constants.REQUEST_TYPE_VEHICLE_SAVE:
 				Intent intent = new Intent(this, SwipeActivity.class);
@@ -246,7 +247,6 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 
 		} catch (Exception e) {
 			Log.d("SwipeActivity", "Error in vehicle request");
-			e.printStackTrace();
 			Toast.makeText(this, getString(R.string.error_unexpected),
 					Toast.LENGTH_SHORT).show();
 

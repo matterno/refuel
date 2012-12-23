@@ -13,6 +13,18 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+    	getFillingsFromSharedPreferences();
+    	
         return inflater.inflate(R.layout.fragment_statistics, container, false);
+    }
+    
+    @Override
+    public void onResume() {
+    	// TODO Calculate statistics data from fillings and show them
+    	super.onResume();
+    }
+    
+    private void getFillingsFromSharedPreferences() {
+    	// TODO Get data from shared preferences
     }
 }
