@@ -241,7 +241,7 @@ public class VehicleFragment extends Fragment implements RequestCallback {
 		return getActivity();
 	}
 
-	public void updateUI(String vehicleName, int vehicleYear,
+	private void updateUI(String vehicleName, int vehicleYear,
 			String vehicleMake, String vehicleModel, String vehicleCurrency,
 			int vehicleDistanceUnit, int vehicleQuantityUnit,
 			int vehicleConsumptionUnit, int vehicleType) {

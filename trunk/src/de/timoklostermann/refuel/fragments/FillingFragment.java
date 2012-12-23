@@ -34,14 +34,19 @@ public class FillingFragment extends Fragment {
     	// Populate that this Fragment wants to have a call to onCreateOptionsMenu()
     	this.setHasOptionsMenu(true);
     	
+    	getFillingsFromSharedPreferences();
+    	
+    	// Set adapter to the list view.
     	FillingAdapter adapter = new FillingAdapter(inflater.getContext(),testData);
     	lv_filling.setAdapter(adapter);
     	
+    	// Set an click listener to the list view
     	lv_filling.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				// Start new Intent
 				Intent intent = new Intent(getActivity().getBaseContext(),EditFillingActivity.class);
 				startActivity(intent);
 			}
@@ -60,9 +65,14 @@ public class FillingFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
     	case R.id.menu_addFilling:
+    		// Start new Intent
     		Intent intent = new Intent(getActivity().getBaseContext(),EditFillingActivity.class);
     		startActivity(intent);
     	}
     	return super.onOptionsItemSelected(item);
+    }
+    
+    private void getFillingsFromSharedPreferences() {
+    	// TODO
     }
 }
