@@ -54,7 +54,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
 					return;
 				}
 				
-				RegisterRequest req = new RegisterRequest(RegisterActivity.this);
+				RegisterRequestTask req = new RegisterRequestTask(RegisterActivity.this);
 				
 				try {
 					req.execute(
@@ -138,12 +138,12 @@ public class RegisterActivity extends Activity implements RequestCallback {
      * @author Timo Klostermann
      *
      */
-    private class RegisterRequest extends RequestTask {
+    private class RegisterRequestTask extends RequestTask {
     	private ProgressDialog progress;
     	
     	private RequestCallback callback;
     	
-    	public RegisterRequest(RequestCallback callback) {
+    	public RegisterRequestTask(RequestCallback callback) {
     		super();
     		
     		this.callback = callback;

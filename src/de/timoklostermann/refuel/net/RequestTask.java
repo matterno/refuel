@@ -39,7 +39,7 @@ public abstract class RequestTask extends
 		
 		try {
 			HttpPost httpPost = new HttpPost(SERVERURL + this.servletURL);
-			httpPost.setEntity(new UrlEncodedFormEntity(Arrays.asList(params)));
+			httpPost.setEntity(new UrlEncodedFormEntity(Arrays.asList(params),"UTF-8"));
 			response = httpclient.execute(httpPost);
 
 		} catch (IOException e) {
