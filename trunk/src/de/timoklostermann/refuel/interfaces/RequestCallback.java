@@ -13,7 +13,7 @@ public interface RequestCallback {
 	public void onRequestComplete(JSONObject obj);
 	
     /**
-     * Callback method for task.
+     * Callback method to get the application context.
      * @param obj
      */
 	public Context getContext();
