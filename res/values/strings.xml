@@ -41,45 +41,6 @@
     <string name="fuel_type_cngh">CNGH</string>
     <string name="fuel_type_cngl">CNGL</string>
     
-    <string-array name="array_consumption">
-        <item>Miles per Gallon</item>
-        <item>Kilometers per Gallon</item>
-        <item>Miles per Imp. Gallon</item>
-        <item>Kilometers per Imp. Gallon</item>
-        <item>Miles per Liter</item>
-        <item>Gallons per 100 Kilometers</item>
-        <item>Liter per 100 Kilometers</item>
-        <item>Imp. Gallons per 100 Kilometers</item>
-    </string-array>
-    
-    <string-array name="array_distance">
-        <item>Kilometers</item>
-        <item>Miles</item>
-    </string-array>
-    
-    <string-array name="array_fueltype">
-        <item>Unleaded</item>
-        <item>Premium Unleaded 95</item>
-        <item>Premium Unleaded 100</item>
-        <item>Super Unleaded</item>
-        <item>Super Plus Unleaded</item>
-        <item>E10</item>
-        <item>Bio-Ethanol</item>
-        <item>Bio-Diesel</item>
-        <item>Diesel</item>
-        <item>Premium Diesel</item>
-        <item>Vegetable Oil</item>
-        <item>LPG</item>
-        <item>CNGH</item>
-        <item>CNGL</item>
-    </string-array>
-    
-    <string-array name="array_quantity">
-        <item>Liters</item>
-        <item>Gallons</item>
-        <item>Imp. Gallons</item>
-    </string-array>
-    
     <!-- Menu Strings -->
     <string name="menu_clearInput">Clear</string>
     <string name="menu_register">Register</string>
@@ -124,11 +85,17 @@
     
     <string name="statistics_tv_consumption">Consumption</string>
     <string name="statistics_tv_distance">Distance</string>
-    <string name="statistics_tv_fillup">Fillup</string>
+    <string name="statistics_tv_cost">Cost</string>
     
     <string name="statistics_tv_average">Average</string>
-    <string name="statistics_tv_worst">Worst</string>
-    <string name="statistics_tv_best">Best</string>
+    <string name="statistics_tv_maximum">Maximum</string>
+    <string name="statistics_tv_minimum">Minimum</string>
+    <string name="statistics_tv_perYear">Per Year</string>
+    <string name="statistics_tv_perMonth">Per Month</string>
+    <string name="statistics_tv_overall">Overall</string>
+    <string name="statistics_tv_averagePerUnit">Average per Unit</string>
+    <string name="statistics_tv_maximumPerUnit">Maximum per Unit</string>
+    <string name="statistics_tv_minimumPerUnit">Minimum per Unit</string>
     
     <string name="login_error_wrong_password">Wrong Password</string>
     <string name="login_error_user_exists_not">User not found</string>

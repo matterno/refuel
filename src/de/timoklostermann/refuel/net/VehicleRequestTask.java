@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Toast;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.SwipeActivity;
-import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.util.Constants;
 
 /**

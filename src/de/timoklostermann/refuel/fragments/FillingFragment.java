@@ -1,5 +1,10 @@
 package de.timoklostermann.refuel.fragments;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import de.timoklostermann.refuel.EditFillingActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.adapter.Filling;
@@ -18,10 +23,9 @@ import android.widget.ListView;
 
 public class FillingFragment extends Fragment {
 	
-	//TODO reale Daten
-	Filling[] testData = new Filling[] {new Filling("01.01.2012","7,9 l/100km","1,59 €/l", "37 l"), new Filling("02.02.2012","7,6 l/100km","1,63 €/l", "13 l")};
-
-	ListView lv_filling;
+	private ListView lv_filling;
+	
+	private List<Filling> fillings;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +41,7 @@ public class FillingFragment extends Fragment {
     	getFillingsFromSharedPreferences();
     	
     	// Set adapter to the list view.
-    	FillingAdapter adapter = new FillingAdapter(inflater.getContext(),testData);
+    	FillingAdapter adapter = new FillingAdapter(inflater.getContext(), fillings);
     	lv_filling.setAdapter(adapter);
     	
     	// Set an click listener to the list view
@@ -73,6 +77,16 @@ public class FillingFragment extends Fragment {
     }
     
     private void getFillingsFromSharedPreferences() {
+    	// TODO
+    	// Test Data!
+    	fillings = new ArrayList<Filling>();
+    	fillings.add(new Filling(new Date(112,10,11),"7,9 l/100km","1,59 €/l", "37 l"));
+    	fillings.add(new Filling(new Date(112,11,01),"7,6 l/100km","1,63 €/l", "13 l"));
+    	
+    	Collections.sort(fillings);
+    }
+    
+    private void saveFillingsToSharedPreferences() {
     	// TODO
     }
 }

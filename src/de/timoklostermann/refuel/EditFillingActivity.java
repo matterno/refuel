@@ -2,9 +2,9 @@ package de.timoklostermann.refuel;
 
 import java.util.Calendar;
 
+import de.timoklostermann.refuel.adapter.Unit;
 import de.timoklostermann.refuel.fragments.DatePickerFragment;
 import de.timoklostermann.refuel.util.Constants;
-import de.timoklostermann.refuel.util.Unit;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.DialogFragment;
