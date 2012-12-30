@@ -10,7 +10,7 @@ import de.timoklostermann.refuel.adapter.Vehicle;
 import de.timoklostermann.refuel.fragments.FillingFragment;
 import de.timoklostermann.refuel.fragments.StatisticsFragment;
 import de.timoklostermann.refuel.fragments.VehicleFragment;
-import de.timoklostermann.refuel.interfaces.RequestCallback;
+import de.timoklostermann.refuel.net.RequestTask.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
 import android.annotation.SuppressLint;

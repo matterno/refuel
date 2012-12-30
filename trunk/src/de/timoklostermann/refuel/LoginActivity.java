@@ -3,8 +3,8 @@ package de.timoklostermann.refuel;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.RequestTask;
+import de.timoklostermann.refuel.net.RequestTask.RequestCallback;
 import de.timoklostermann.refuel.util.Constants;
 import de.timoklostermann.refuel.util.PasswordEncryption;
 import android.os.Bundle;
@@ -46,13 +46,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 		edt_pw = (EditText) this.findViewById(R.id.edt_login_password);
 		cb_remember = (CheckBox) this.findViewById(R.id.cb_login_remember);
 
-		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
-				MODE_PRIVATE);
-		if (prefs.getBoolean(PREF_REMEMBER, false)) {
-			edt_login.setText(prefs.getString(Constants.LOGIN_NAME, ""));
-			edt_pw.setText(prefs.getString(Constants.LOGIN_PASSWORD, ""));
-			cb_remember.setChecked(true);
-		}
+		getLoginFromSharedPreferences();
 
 		btn_login.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -108,18 +102,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 
 		this.setSharedPrefs();
 	}
-
-	private void setSharedPrefs() {
-		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
-				MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(Constants.LOGIN_NAME, edt_login.getText().toString());
-		editor.putString(Constants.LOGIN_PASSWORD, edt_pw.getText().toString());
-		editor.putBoolean(PREF_REMEMBER, cb_remember.isChecked());
-		
-		editor.commit();
-	}
-
+	
 	@Override
 	public void onRequestComplete(JSONObject obj) {
 		try {
@@ -160,6 +143,27 @@ public class LoginActivity extends Activity implements RequestCallback {
 		return this;
 	}
 
+	private void setSharedPrefs() {
+		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.LOGIN_NAME, edt_login.getText().toString());
+		editor.putString(Constants.LOGIN_PASSWORD, edt_pw.getText().toString());
+		editor.putBoolean(PREF_REMEMBER, cb_remember.isChecked());
+		
+		editor.commit();
+	}
+
+	private void getLoginFromSharedPreferences() {
+		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
+				MODE_PRIVATE);
+		if (prefs.getBoolean(PREF_REMEMBER, false)) {
+			edt_login.setText(prefs.getString(Constants.LOGIN_NAME, ""));
+			edt_pw.setText(prefs.getString(Constants.LOGIN_PASSWORD, ""));
+			cb_remember.setChecked(true);
+		}
+	}
+	
 	/**
 	 * Looks if login name and passwort fit requirements.
 	 * 

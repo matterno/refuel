@@ -1,5 +1,8 @@
 package de.timoklostermann.refuel.adapter;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import de.timoklostermann.refuel.R;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,20 +13,20 @@ import android.widget.TextView;
 
 public class FillingAdapter extends BaseAdapter {
 
-	private Filling[] items; // Nicht String, sondern Filling-Objekte.
+	private List<Filling> items;
 	private LayoutInflater inflater;
 
-	public FillingAdapter(Context context, Filling[] items) {
+	public FillingAdapter(Context context, List<Filling> items) {
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.items = items;
 	}
 	
 	public int getCount() {
-		return items.length;
+		return items.size();
 	}
 
 	public Object getItem(int position) {
-		return items[position];
+		return items.get(position);
 	}
 
 	public long getItemId(int position) {
@@ -41,10 +44,12 @@ public class FillingAdapter extends BaseAdapter {
 		TextView tv_price = (TextView) convertView.findViewById(R.id.tv_item_filling_price);
 		TextView tv_quantitiy = (TextView) convertView.findViewById(R.id.tv_item_filling_quantity);
 		
-		tv_date.setText(items[position].getDate());
-		tv_consumption.setText(items[position].getConsupmtion());
-		tv_price.setText(items[position].getPrice());
-		tv_quantitiy.setText(items[position].getQuantitiy());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		
+		tv_date.setText(sdf.format(items.get(position).getDate()));
+		tv_consumption.setText(items.get(position).getConsupmtion());
+		tv_price.setText(items.get(position).getPrice());
+		tv_quantitiy.setText(items.get(position).getQuantitiy());
 		
 		return convertView;
 	}

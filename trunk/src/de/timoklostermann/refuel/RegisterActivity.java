@@ -4,8 +4,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.timoklostermann.refuel.interfaces.RequestCallback;
 import de.timoklostermann.refuel.net.RequestTask;
+import de.timoklostermann.refuel.net.RequestTask.RequestCallback;
 import de.timoklostermann.refuel.util.Constants;
 import de.timoklostermann.refuel.util.PasswordEncryption;
 import android.os.Bundle;
@@ -85,6 +85,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
     	try {
 			if(!obj.getBoolean(Constants.JSON_SUCCESS)) {
 				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.register_error_user_found), Toast.LENGTH_SHORT).show();
+				return;
 			}
 		} catch (JSONException e) {
 			Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();

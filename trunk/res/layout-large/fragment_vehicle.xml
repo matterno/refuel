@@ -85,24 +85,21 @@
                 <Spinner
                     android:id="@+id/sp_vehicle_distance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/array_distance" />
+                    android:layout_height="wrap_content" />
 
                 <!-- Quantity -->
 
                 <Spinner
                     android:id="@+id/sp_vehicle_quantity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/array_quantity" />
+                    android:layout_height="wrap_content"/>
 
                 <!-- Consupmtion -->
 
                 <Spinner
                     android:id="@+id/sp_vehicle_consumption"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/array_consumption" />
+                    android:layout_height="wrap_content" />
 
                 <!-- Currency -->
 

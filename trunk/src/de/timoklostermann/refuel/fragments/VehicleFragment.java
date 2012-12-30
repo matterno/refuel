@@ -7,10 +7,10 @@ import de.timoklostermann.refuel.LoginActivity;
 import de.timoklostermann.refuel.NewVehicleActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.SwipeActivity;
-import de.timoklostermann.refuel.interfaces.RequestCallback;
+import de.timoklostermann.refuel.adapter.Unit;
+import de.timoklostermann.refuel.net.RequestTask.RequestCallback;
 import de.timoklostermann.refuel.net.VehicleRequestTask;
 import de.timoklostermann.refuel.util.Constants;
-import de.timoklostermann.refuel.util.Unit;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +29,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class VehicleFragment extends Fragment implements RequestCallback {
+public class VehicleFragment extends Fragment implements RequestCallback{
 
 	private EditText edt_name;
 

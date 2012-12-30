@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="hallo" />
+                android:gravity="right" />
 
         </TableRow>
 
@@ -41,16 +41,16 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_worst" />
+                android:text="@string/statistics_tv_maximum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_worst"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_fuel_maximum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
 
@@ -59,16 +59,70 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_best" />
+                android:text="@string/statistics_tv_minimum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_best"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_fuel_minimum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perYear" />
+
+            <TextView
+                android:id="@+id/tv_statistics_fuel_perYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perMonth" />
+
+            <TextView
+                android:id="@+id/tv_statistics_fuel_perMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_overall" />
+
+            <TextView
+                android:id="@+id/tv_statistics_fuel_overall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
     </TableLayout>
@@ -88,16 +142,16 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:text="@string/statistics_tv_average" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_average"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_distance_average"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
 
         </TableRow>
 
@@ -106,16 +160,16 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_worst" />
+                android:text="@string/statistics_tv_maximum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_worst"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_distance_maximum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
 
@@ -124,16 +178,70 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_best" />
+                android:text="@string/statistics_tv_minimum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_best"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_distance_minimum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perYear" />
+
+            <TextView
+                android:id="@+id/tv_statistics_distance_perYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perMonth" />
+
+            <TextView
+                android:id="@+id/tv_statistics_distance_perMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_overall" />
+
+            <TextView
+                android:id="@+id/tv_statistics_distance_overall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
     </TableLayout>
@@ -142,7 +250,7 @@
         style="@style/sectionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/statistics_tv_fillup" />
+        android:text="@string/statistics_tv_cost" />
     
     <TableLayout
         android:layout_width="match_parent"
@@ -153,16 +261,16 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:text="@string/statistics_tv_average" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_average"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_cost_average"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
 
         </TableRow>
 
@@ -171,16 +279,16 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_worst" />
+                android:text="@string/statistics_tv_maximum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_worst"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_cost_maximum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
 
@@ -189,18 +297,127 @@
             android:layout_height="wrap_content" >
             
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:text="@string/statistics_tv_best" />
+                android:text="@string/statistics_tv_minimum" />
 
             <TextView
-                android:id="@+id/tv_statistics_fuel_best"
-                android:layout_width="0dp"
+                android:id="@+id/tv_statistics_cost_minimum"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="3" android:gravity="right" />
             
         </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_averagePerUnit" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_averagePerUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_maximumPerUnit" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_maximumPerUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_minimumPerUnit" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_minimumPerUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perYear" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_perYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_perMonth" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_perMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="@string/statistics_tv_overall" />
+
+            <TextView
+                android:id="@+id/tv_statistics_cost_overall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" android:gravity="right" />
+            
+        </TableRow>
+        
     </TableLayout>
     
 </LinearLayout>
