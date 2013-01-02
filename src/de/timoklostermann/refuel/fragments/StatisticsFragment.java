@@ -79,10 +79,13 @@ public class StatisticsFragment extends Fragment {
 	
     @Override
     public void onResume() {
-    	// TODO Calculate statistics data from fillings and show them
+    	// Get the fillings from shared preferences.
 		getFillingsFromSharedPreferences();
+		
+		// Create a statistics helper to calculate statistics.
 		StatisticsHelper stats = new StatisticsHelper(fillings);
 		
+		// Format the number to the given locale (e.g. 6,3 in ths USA and 6,3 in Germany).
 		NumberFormat format = NumberFormat.getNumberInstance(Locale.getDefault());
 		format.setMaximumFractionDigits(1);
 		
@@ -118,7 +121,9 @@ public class StatisticsFragment extends Fragment {
     private void getFillingsFromSharedPreferences() {
     	// TODO Hardcoded for testing
     	fillings = new ArrayList<Filling>();
-    	fillings.add(new Filling(new Date(112,10,11),149500,1.59,13, true));
-    	fillings.add(new Filling(new Date(112,11,01),150137,1.63,37, true));
+    	fillings.add(new Filling(new Date(112,10,11),149500,1.599,13, true));
+    	fillings.add(new Filling(new Date(112,11,01),150137,1.639,37, true));
+    	fillings.add(new Filling(new Date(112,11,11),150300,1.659,5.3, false));
+    	fillings.add(new Filling(new Date(112,12,01),150737,1.449,31.2, true));
     }
 }

@@ -39,8 +39,10 @@ public abstract class RequestTask extends
 		HttpResponse response = null;
 		
 		try {
+			// Do a POST request with an utf8 encoded entity.
 			HttpPost httpPost = new HttpPost(SERVERURL + this.servletURL);
 			httpPost.setEntity(new UrlEncodedFormEntity(Arrays.asList(params),"UTF-8"));
+			// get the response.
 			response = httpclient.execute(httpPost);
 
 		} catch (IOException e) {

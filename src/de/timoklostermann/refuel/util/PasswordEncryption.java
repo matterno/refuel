@@ -14,6 +14,11 @@ import android.util.Log;
  */
 public class PasswordEncryption {
 
+	/**
+	 * Encrypts the UTF8-password with SHA-1 algortihmus.
+	 * @param password
+	 * @return
+	 */
 	public static String encrypt(String password) {
 		MessageDigest md = null;
         byte[] hashValue = null;

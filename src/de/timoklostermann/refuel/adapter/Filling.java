@@ -66,6 +66,10 @@ public class Filling implements Comparable<Filling> {
 		this.consumptionToPrevious = consumptionToPrevious;
 	}
 
+	/**
+	 * Compares another Filling to this one by date.
+	 * The newest date is the last position.
+	 */
 	@Override
 	public int compareTo(Filling another) {
 		if(this.getDate().after(another.getDate())) {

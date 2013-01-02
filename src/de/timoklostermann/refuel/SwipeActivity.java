@@ -109,14 +109,17 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_addVehicle:
+			// Add a vehicle
 			Intent intent = new Intent(this, NewVehicleActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
 		case R.id.menu_deleteVehicle:
+			// Fire a delete request
 			requestDeleteVehicle();
 			break;
 		case R.id.menu_logout:
+			// Go to login
 			intent = new Intent(this, LoginActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
@@ -267,6 +270,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 
 	@Override
 	protected void onStop() {
+		// Save vehicle name to shared preferences.
 		SharedPreferences prefs = getSharedPreferences(
 				LoginActivity.PREFERENCES, MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();

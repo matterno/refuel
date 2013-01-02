@@ -35,10 +35,12 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 		btn_date = (Button) this.findViewById(R.id.btn_new_filling_date);
 		sp_fuelType = (Spinner) this.findViewById(R.id.sp_edit_filling_fuelType);
 		
+		// Show actual date on date button
 		Calendar c = Calendar.getInstance();
 		btn_date.setText(c.get(Calendar.DAY_OF_MONTH) + "."
 				+ (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.YEAR));
 
+		// Give the button an onclicklistener
 		btn_date.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				FragmentTransaction ft = getFragmentManager()
@@ -49,8 +51,10 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 			}
 		});
 		
+		// Get fuel type units
 		fuelTypeUnits = this.getFuelTypeUnits();
 		
+		// Create new Adapter with the fuel type units and assign it to the spinner
 		ArrayAdapter<Unit> fuelTypeAdapter = new ArrayAdapter<Unit>(this, android.R.layout.simple_spinner_item, fuelTypeUnits);
 		fuelTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_fuelType.setAdapter(fuelTypeAdapter);
@@ -64,6 +68,7 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {
+		// Set the choosen date to the date button
 		btn_date.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
 	}
 
@@ -71,6 +76,7 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_edit_filling_save:
+			// Open SwipeActivity
 			Intent intent = new Intent(this, SwipeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
@@ -78,6 +84,10 @@ public class EditFillingActivity extends Activity implements OnDateSetListener {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Gives an array of units.
+	 * @return the unit array.
+	 */
 	private Unit[] getFuelTypeUnits() {
 		return new Unit[] {
 				new Unit(Constants.FUEL_TYPE_UNIT_UNLEADED, getString(R.string.fuel_type_unleaded)),
