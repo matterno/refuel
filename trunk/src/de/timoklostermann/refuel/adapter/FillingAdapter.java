@@ -1,9 +1,13 @@
 package de.timoklostermann.refuel.adapter;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import de.timoklostermann.refuel.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,12 +48,23 @@ public class FillingAdapter extends BaseAdapter {
 		TextView tv_price = (TextView) convertView.findViewById(R.id.tv_item_filling_price);
 		TextView tv_quantitiy = (TextView) convertView.findViewById(R.id.tv_item_filling_quantity);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		DateFormat sdf = SimpleDateFormat.getDateInstance();
+		NumberFormat format = NumberFormat.getNumberInstance(Locale.getDefault());
+		format.setMaximumFractionDigits(1);
 		
+		//TODO Show correct Units!
 		tv_date.setText(sdf.format(items.get(position).getDate()));
-		tv_consumption.setText(items.get(position).getConsupmtion());
-		tv_price.setText(items.get(position).getPrice());
-		tv_quantitiy.setText(items.get(position).getQuantitiy());
+		
+		double consumption = items.get(position).getConsumptionToPrevious();
+		if(consumption != 0) {
+			tv_consumption.setText(format.format(consumption) + "l/100km");
+		} else {
+			tv_consumption.setText("--l/100km");
+		}
+		tv_quantitiy.setText(format.format(items.get(position).getQuantitiy()) + "l");
+		
+		format.setMaximumFractionDigits(2);
+		tv_price.setText(format.format(items.get(position).getPrice()) + "€");
 		
 		return convertView;
 	}

@@ -58,7 +58,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 					return;
 				}
 
-				LoginActivity.this.setSharedPrefs();
+				saveLoginToSharedPreferences();
 				
 				// Send a login request
 				LoginRequest req = new LoginRequest(LoginActivity.this);
@@ -81,6 +81,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate options menu
 		getMenuInflater().inflate(R.menu.activity_login, menu);
 		return true;
 	}
@@ -100,7 +101,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 	protected void onStop() {
 		super.onStop();
 
-		this.setSharedPrefs();
+		this.saveLoginToSharedPreferences();
 	}
 	
 	@Override
@@ -113,14 +114,14 @@ public class LoginActivity extends Activity implements RequestCallback {
 					Toast.makeText(
 							LoginActivity.this,
 							getResources().getString(
-									R.string.login_error_wrong_password),
+									R.string.error_wrong_password),
 							Toast.LENGTH_SHORT).show();
 					break;
 				case Constants.ERROR_USER_EXISTS_NOT:
 					Toast.makeText(
 							LoginActivity.this,
 							getResources().getString(
-									R.string.login_error_user_exists_not),
+									R.string.error_user_not_found),
 							Toast.LENGTH_SHORT).show();
 					break;
 				}
@@ -143,7 +144,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 		return this;
 	}
 
-	private void setSharedPrefs() {
+	private void saveLoginToSharedPreferences() {
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
@@ -215,8 +216,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 				progress.dismiss();
 			}
 			try {
-				JSONObject obj = this.get();
-				if (obj == null) {
+				if (result == null) {
 					if (errorcode == Constants.ERROR_NO_CONNECTION) {
 						Toast.makeText(
 								LoginActivity.this,
@@ -233,7 +233,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 					}
 					return;
 				}
-				callback.onRequestComplete(obj);
+				callback.onRequestComplete(result);
 			} catch (Exception e) {
 				Log.e("LoginRequest", "Error in onPostExcecute()");
 				Toast.makeText(LoginActivity.this,

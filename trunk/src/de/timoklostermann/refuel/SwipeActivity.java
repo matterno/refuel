@@ -55,7 +55,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 		setContentView(R.layout.activity_swipe);
 
 		vehicle = new Vehicle();
-		restoreVehicleDataFromSharedPreferences();
+		getDataFromSharedPreferences();
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections
@@ -78,7 +78,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			// navigation index
 			vehicleNames = savedInstanceState
 					.getStringArrayList(Constants.VEHICLE_NAMES);
-			setNavigationListAdapter(vehicleNames);
+			setNavigationListAdapter();
 			actionBar.setSelectedNavigationItem(savedInstanceState
 					.getInt(BUNDLE_SELECTED_NAVIGATION_INDEX));
 		} else {
@@ -112,6 +112,9 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			Intent intent = new Intent(this, NewVehicleActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
+			break;
+		case R.id.menu_deleteVehicle:
+			requestDeleteVehicle();
 			break;
 		case R.id.menu_logout:
 			intent = new Intent(this, LoginActivity.class);
@@ -156,18 +159,21 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	public void onRequestComplete(JSONObject obj) {
 		try {
 			if (!obj.getBoolean(Constants.JSON_SUCCESS)) {
-
 				switch (obj.getInt(Constants.JSON_ERROR)) {
 				case Constants.ERROR_VEHICLE_EXISTS_NOT:
 					Toast.makeText(this,
-							getString(R.string.vehicle_error_not_found),
+							getString(R.string.error_vehicle_not_found),
 							Toast.LENGTH_SHORT).show();
 					break;
 				case Constants.ERROR_VEHICLE_EXISTS:
 					Toast.makeText(this,
-							getString(R.string.vehicle_error_exists),
+							getString(R.string.error_vehicle_exists),
 							Toast.LENGTH_SHORT).show();
 					break;
+				case Constants.ERROR_USER_EXISTS_NOT:
+					Toast.makeText(this,
+							getString(R.string.error_user_not_found),
+							Toast.LENGTH_SHORT).show();
 				}
 				return;
 			}
@@ -191,7 +197,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 				}
 
 				// Set new SpinnerAdapter
-				setNavigationListAdapter(vehicleNames);
+				setNavigationListAdapter();
 
 				// Get previously selected vehicle to select it again
 				SharedPreferences prefs = getSharedPreferences(
@@ -224,10 +230,10 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 				vehicle.setId(obj.getLong(Constants.VEHICLE_KEY));
 
 				// Save the attributes to shared preferences
-				saveVehicleDataToSharedPreferences();
+				saveDataToSharedPreferences();
 
 				// TODO Get Filling data
-				// save filling data
+				// save filling data to shared preferences
 				
 				// Call the adapter that data has changed, so that it can
 				// rebuild the view.
@@ -236,11 +242,13 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			case Constants.REQUEST_TYPE_VEHICLE_SAVE:
 				Intent intent = new Intent(this, SwipeActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.putExtra(Constants.LOGIN_NAME, this.userName);
 				startActivity(intent);
 
 				break;
 			case Constants.REQUEST_TYPE_VEHICLE_UPDATE:
+				requestAllVehicle();
+				break;
+			case Constants.REQUEST_TYPE_VEHICLE_DELETE:				
 				requestAllVehicle();
 				break;
 			}
@@ -290,7 +298,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 			case 1:
 				return new StatisticsFragment();
 			case 2:
-				saveVehicleDataToSharedPreferences();
+				saveDataToSharedPreferences();
 				VehicleFragment fragment = new VehicleFragment();
 				return fragment;
 			default:
@@ -329,6 +337,8 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	 * Sending an request to get all vehicle names.
 	 */
 	private void requestAllVehicle() {
+		Log.d("SwipeActivity", "Requesting all vehicle names");
+		
 		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(new BasicNameValuePair(Constants.REQUEST_TYPE,
@@ -342,11 +352,11 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	}
 
 	/**
-	 * Sending an request to get data from a vehicle.
+	 * Sending a request to get data from a vehicle.
 	 */
 	private void requestGetVehicle() {
-		Log.d("SwipeActivity", "Requesting vehicle with " + vehicle.getName());
-		// Send a vehicle request that gets the default vehicle
+		Log.d("SwipeActivity", "Requesting vehicle " + vehicle.getName());
+		// Send a vehicle request that gets the a vehicle
 		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
 			req.execute(
@@ -361,11 +371,30 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 					Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	/**
+	 * Sending a request to delete a vehicle().
+	 */
+	private void requestDeleteVehicle() {
+		Log.d("SwipeActivity", "Deleting vehicle " + vehicle.getName());
+		// Send a vehicle request that deletes this vehicle
+		VehicleRequestTask req = new VehicleRequestTask(this);
+		try {
+			req.execute(
+					new BasicNameValuePair(Constants.REQUEST_TYPE, Constants.REQUEST_TYPE_VEHICLE_DELETE + ""),
+					new BasicNameValuePair(Constants.VEHICLE_KEY, vehicle.getId() + ""),
+					new BasicNameValuePair(Constants.USER_NAME, this.userName));
+		} catch (Exception e) {
+			Log.d("SwipeActivity", "Error in get vehicle request");
+			Toast.makeText(this, getString(R.string.error_unexpected),
+					Toast.LENGTH_SHORT).show();
+		}
+	}
 
 	/**
 	 * Saving all vehicle datas to shared preferences.
 	 */
-	private void saveVehicleDataToSharedPreferences() {
+	private void saveDataToSharedPreferences() {
 		Log.d("SwipeActivity", "saveVehicleDataToSharedPreferences");
 		SharedPreferences prefs = getSharedPreferences(
 				LoginActivity.PREFERENCES, MODE_PRIVATE);
@@ -389,7 +418,7 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	/**
 	 * Called to restore all saved shared preferences.
 	 */
-	private void restoreVehicleDataFromSharedPreferences() {
+	private void getDataFromSharedPreferences() {
 		Log.d("SwipeActivity", "saveVehicleDataToSharedPreferences");
 		SharedPreferences prefs = getSharedPreferences(
 				LoginActivity.PREFERENCES, MODE_PRIVATE);
@@ -416,10 +445,10 @@ public class SwipeActivity extends FragmentActivity implements RequestCallback,
 	 * 
 	 * @param vehicles
 	 */
-	private void setNavigationListAdapter(ArrayList<String> vehicles) {
+	private void setNavigationListAdapter() {
 		mSpinnerAdapter = new ArrayAdapter<String>(getActionBar()
 				.getThemedContext(),
-				android.R.layout.simple_spinner_dropdown_item, vehicles);
+				android.R.layout.simple_spinner_dropdown_item, vehicleNames);
 		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
 	}
 }

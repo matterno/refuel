@@ -206,7 +206,7 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 				case Constants.ERROR_VEHICLE_EXISTS:
 					// If this vehicle already exists
 					Toast.makeText(getActivity().getBaseContext(),
-							getString(R.string.vehicle_error_exists),
+							getString(R.string.error_vehicle_exists),
 							Toast.LENGTH_SHORT).show();
 					break;
 				}

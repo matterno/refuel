@@ -44,6 +44,7 @@ public abstract class RequestTask extends
 			response = httpclient.execute(httpPost);
 
 		} catch (IOException e) {
+			errorcode = Constants.ERROR_NO_CONNECTION;
 			Log.e("IOException", "Error executing http request");
 			return null;
 		}
@@ -54,10 +55,13 @@ public abstract class RequestTask extends
 		} catch (JSONException e) {
 			errorcode = Constants.ERROR_UNEXPECTED;
 			return null;
-		} catch (IOException e) {
-			errorcode = Constants.ERROR_NO_CONNECTION;
+		} catch (IllegalStateException e) {
+			errorcode = Constants.ERROR_UNEXPECTED;
 			return null;
-		}
+		} catch (IOException e) {
+			errorcode = Constants.ERROR_UNEXPECTED;
+			return null;
+		} 
 		
 		
 		return data;

@@ -47,8 +47,7 @@ public class VehicleRequestTask extends RequestTask {
 			progress.dismiss();
 		}
 		try {
-			JSONObject obj = this.get();
-			if (obj == null) {
+			if (result == null) {
 				if (errorcode == Constants.ERROR_NO_CONNECTION) {
 					Toast.makeText(
 							callback.getContext(),
@@ -56,7 +55,7 @@ public class VehicleRequestTask extends RequestTask {
 									R.string.error_no_connection),
 							Toast.LENGTH_SHORT).show();
 				} else {
-					Log.e("LoginRequest", "Error in onPostExcecute()");
+					Log.e("VehicleRequest", "Error in onPostExcecute()");
 					Toast.makeText(
 							callback.getContext(),
 							callback.getContext().getString(R.string.error_unexpected),
@@ -64,7 +63,7 @@ public class VehicleRequestTask extends RequestTask {
 				}
 				return;
 			}
-			callback.onRequestComplete(obj);
+			callback.onRequestComplete(result);
 		} catch (Exception e) {
 			Log.e("VehicleRequest", "Error in onPostExcecute()");
 			e.printStackTrace();

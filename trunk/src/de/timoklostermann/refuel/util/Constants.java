@@ -27,6 +27,7 @@ public interface Constants {
 	public static final int REQUEST_TYPE_VEHICLE_GET = 1;
 	public static final int REQUEST_TYPE_VEHICLE_GET_ALL_LIST = 2;
 	public static final int REQUEST_TYPE_VEHICLE_UPDATE = 3;
+	public static final int REQUEST_TYPE_VEHICLE_DELETE = 4;
 	
 	public static final int REQUEST_TYPE_USER_SAVE_DEFAULT_VEHICLE = 0;
 	

@@ -2,6 +2,7 @@ package de.timoklostermann.refuel.fragments;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import de.timoklostermann.refuel.EditFillingActivity;
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.adapter.Filling;
 import de.timoklostermann.refuel.adapter.FillingAdapter;
+import de.timoklostermann.refuel.util.StatisticsHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +41,8 @@ public class FillingFragment extends Fragment {
     	this.setHasOptionsMenu(true);
     	
     	getFillingsFromSharedPreferences();
+    	
+    	sortFillingsDescending();
     	
     	// Set adapter to the list view.
     	FillingAdapter adapter = new FillingAdapter(inflater.getContext(), fillings);
@@ -80,13 +84,32 @@ public class FillingFragment extends Fragment {
     	// TODO
     	// Test Data!
     	fillings = new ArrayList<Filling>();
-    	fillings.add(new Filling(new Date(112,10,11),"7,9 l/100km","1,59 €/l", "37 l"));
-    	fillings.add(new Filling(new Date(112,11,01),"7,6 l/100km","1,63 €/l", "13 l"));
+    	fillings.add(new Filling(new Date(112,10,11),149500,1.59,13, true));
+    	fillings.add(new Filling(new Date(112,11,01),150137,1.63,37, true));
     	
-    	Collections.sort(fillings);
+    	StatisticsHelper helper = new StatisticsHelper(fillings);
+    	fillings = helper.generateConsumptionToPreviousList();
     }
     
     private void saveFillingsToSharedPreferences() {
     	// TODO
     }
+    
+	/**
+	 * Sorts the filling descending by date.
+	 */
+	private void sortFillingsDescending() {
+		Collections.sort(fillings, new Comparator<Filling>() {
+			@Override
+			public int compare(Filling lhs, Filling rhs) {
+				if(lhs.getDate().after(rhs.getDate())) {
+					return -1;
+				} else if(lhs.getDate().before(rhs.getDate())) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		});
+	}
 }
