@@ -37,6 +37,9 @@ public class FillingAdapter extends BaseAdapter {
 		return position + 1;
 	}
 
+	/**
+	 * Gets the view for the listView.
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		if (convertView == null) {
@@ -51,6 +54,7 @@ public class FillingAdapter extends BaseAdapter {
 		DateFormat sdf = SimpleDateFormat.getDateInstance();
 		NumberFormat format = NumberFormat.getNumberInstance(Locale.getDefault());
 		format.setMaximumFractionDigits(1);
+		format.setMinimumFractionDigits(1);
 		
 		//TODO Show correct Units!
 		tv_date.setText(sdf.format(items.get(position).getDate()));
@@ -64,6 +68,7 @@ public class FillingAdapter extends BaseAdapter {
 		tv_quantitiy.setText(format.format(items.get(position).getQuantitiy()) + "l");
 		
 		format.setMaximumFractionDigits(2);
+		format.setMinimumFractionDigits(2);
 		tv_price.setText(format.format(items.get(position).getPrice()) + "€");
 		
 		return convertView;

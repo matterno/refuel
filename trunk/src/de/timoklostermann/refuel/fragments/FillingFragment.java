@@ -40,8 +40,10 @@ public class FillingFragment extends Fragment {
     	// Populate that this Fragment wants to have a call to onCreateOptionsMenu()
     	this.setHasOptionsMenu(true);
     	
+    	// Get Filling data from shared preferences.
     	getFillingsFromSharedPreferences();
     	
+    	// Sort the fillings for the filling list.
     	sortFillingsDescending();
     	
     	// Set adapter to the list view.
@@ -84,8 +86,10 @@ public class FillingFragment extends Fragment {
     	// TODO
     	// Test Data!
     	fillings = new ArrayList<Filling>();
-    	fillings.add(new Filling(new Date(112,10,11),149500,1.59,13, true));
-    	fillings.add(new Filling(new Date(112,11,01),150137,1.63,37, true));
+    	fillings.add(new Filling(new Date(112,10,11),149500,1.599,13, true));
+    	fillings.add(new Filling(new Date(112,11,01),150137,1.639,37, true));
+    	fillings.add(new Filling(new Date(112,11,11),150300,1.659,5.3, false));
+    	fillings.add(new Filling(new Date(112,12,01),150737,1.449,31.2, true));
     	
     	StatisticsHelper helper = new StatisticsHelper(fillings);
     	fillings = helper.generateConsumptionToPreviousList();

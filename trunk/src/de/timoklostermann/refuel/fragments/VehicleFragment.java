@@ -83,6 +83,7 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 		quantityUnits = this.getQuantityUnits();
 		distanceUnits = this.getDistanceUnits();
 
+		// Create Adapter for consumption spinner
 		ArrayAdapter<Unit> consumptionAdapter = new ArrayAdapter<Unit>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				consumptionUnits);
@@ -90,6 +91,8 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_consumptionUnit.setAdapter(consumptionAdapter);
 
+		
+		// Create Adapter for quantity spinner
 		ArrayAdapter<Unit> quantityAdapter = new ArrayAdapter<Unit>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				quantityUnits);
@@ -97,6 +100,7 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_quantityUnit.setAdapter(quantityAdapter);
 
+		// Create Adapter for distance spinner
 		ArrayAdapter<Unit> distanceAdapter = new ArrayAdapter<Unit>(
 				getActivity(), android.R.layout.simple_spinner_item,
 				distanceUnits);
@@ -123,7 +127,8 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 					prefs.getInt(Constants.VEHICLE_DISTANCE_UNIT, 0),
 					prefs.getInt(Constants.VEHICLE_QUANTITY_UNIT, 0),
 					prefs.getInt(Constants.VEHICLE_CONSUMPTION_UNIT, 0), 0);
-			// TODO prefs.getInt(Constants.VEHICLE_TYPE_ID, 0)
+					// TODO Fahrzeug-Typ
+					// prefs.getInt(Constants.VEHICLE_TYPE_ID, 0)
 			vehicleId = prefs.getLong(Constants.VEHICLE_KEY, 0);
 		}
 
@@ -160,14 +165,18 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 			}
 
 			if (getActivity() instanceof SwipeActivity) {
-				updateVehicle();
+				requestUpdateVehicle();
 			} else {
-				saveVehicle();
+				requestSaveVehicle();
 			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Validates the vehicle input data.
+	 * @return true if it could be validated.
+	 */
 	private boolean validateVehicle() {
 		String name = edt_name.getText().toString();
 		String year = edt_year.getText().toString();
@@ -241,6 +250,18 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 		return getActivity();
 	}
 
+	/**
+	 * Updates all input field on the UI. 
+	 * @param vehicleName
+	 * @param vehicleYear
+	 * @param vehicleMake
+	 * @param vehicleModel
+	 * @param vehicleCurrency
+	 * @param vehicleDistanceUnit
+	 * @param vehicleQuantityUnit
+	 * @param vehicleConsumptionUnit
+	 * @param vehicleType
+	 */
 	private void updateUI(String vehicleName, int vehicleYear,
 			String vehicleMake, String vehicleModel, String vehicleCurrency,
 			int vehicleDistanceUnit, int vehicleQuantityUnit,
@@ -256,11 +277,14 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 		sp_quantityUnit.setSelection(vehicleQuantityUnit);
 		sp_consumptionUnit.setSelection(vehicleConsumptionUnit);
 
-		// TODO
+		// TODO VehicleType
 		// sp_vehicleType.setSelectedItem(vehicleType);
 	}
 
-	private void saveVehicle() {
+	/**
+	 * Sends out a request that saves the vehicle.
+	 */
+	private void requestSaveVehicle() {
 		// Send a vehicle request that saves the vehicle
 		VehicleRequestTask req = new VehicleRequestTask(this);
 		try {
@@ -292,7 +316,10 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 		}
 	}
 
-	private void updateVehicle() {
+	/**
+	 * Send out a request that updates the vehicle.
+	 */
+	private void requestUpdateVehicle() {
 		// Send a vehicle request that saves the vehicle
 		VehicleRequestTask req = new VehicleRequestTask(mCallbacks);
 		try {
@@ -326,6 +353,10 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 		}
 	}
 
+	/**
+	 * Gets all consumption unit in an array.
+	 * @return
+	 */
 	private Unit[] getConsumtionUnits() {
 		return new Unit[] {
 				new Unit(Constants.CONSUMPTION_UNIT_MPG,
@@ -346,6 +377,10 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 						getString(R.string.consumption_unit_igp100km)) };
 	}
 
+	/**
+	 * Gets all distance units in an array.
+	 * @return
+	 */
 	private Unit[] getDistanceUnits() {
 		return new Unit[] {
 				new Unit(Constants.DISTANCE_UNIT_KILOMETERS,
@@ -354,6 +389,10 @@ public class VehicleFragment extends Fragment implements RequestCallback{
 						getString(R.string.distance_unit_miles)) };
 	}
 
+	/**
+	 * Gets all quantity units in an array.
+	 * @return
+	 */
 	private Unit[] getQuantityUnits() {
 		return new Unit[] {
 				new Unit(Constants.QUANTITY_UNIT_LITERS,

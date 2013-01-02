@@ -46,8 +46,10 @@ public class LoginActivity extends Activity implements RequestCallback {
 		edt_pw = (EditText) this.findViewById(R.id.edt_login_password);
 		cb_remember = (CheckBox) this.findViewById(R.id.cb_login_remember);
 
+		// Get login data from shared preferences
 		getLoginFromSharedPreferences();
 
+		// Set an onclicklistener to the login button
 		btn_login.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// validate login form
@@ -58,6 +60,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 					return;
 				}
 
+				// save login data
 				saveLoginToSharedPreferences();
 				
 				// Send a login request
@@ -101,6 +104,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 	protected void onStop() {
 		super.onStop();
 
+		// Save login data
 		this.saveLoginToSharedPreferences();
 	}
 	
@@ -134,6 +138,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 					Toast.LENGTH_SHORT).show();
 		}
 
+		// No Error, start SwipeActivity
 		Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
@@ -144,6 +149,9 @@ public class LoginActivity extends Activity implements RequestCallback {
 		return this;
 	}
 
+	/**
+	 * Saves the login data to shared preferences.
+	 */
 	private void saveLoginToSharedPreferences() {
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				MODE_PRIVATE);
@@ -155,6 +163,9 @@ public class LoginActivity extends Activity implements RequestCallback {
 		editor.commit();
 	}
 
+	/**
+	 * Gets the login data from shared preferences.
+	 */
 	private void getLoginFromSharedPreferences() {
 		SharedPreferences prefs = getSharedPreferences(PREFERENCES,
 				MODE_PRIVATE);
@@ -233,6 +244,7 @@ public class LoginActivity extends Activity implements RequestCallback {
 					}
 					return;
 				}
+				// Send to callback.
 				callback.onRequestComplete(result);
 			} catch (Exception e) {
 				Log.e("LoginRequest", "Error in onPostExcecute()");

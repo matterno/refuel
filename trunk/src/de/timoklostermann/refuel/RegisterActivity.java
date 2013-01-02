@@ -37,7 +37,8 @@ public class RegisterActivity extends Activity implements RequestCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         
-        getActionBar().setDisplayHomeAsUpEnabled(true); // Show little back icon in action bar
+        // Show little back icon in action bar
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         btn_register = (Button) this.findViewById(R.id.btn_register_register);
         edt_name = (EditText) this.findViewById(R.id.edt_register_name);
@@ -45,33 +46,28 @@ public class RegisterActivity extends Activity implements RequestCallback {
         edt_password_repeat = (EditText) this.findViewById(R.id.edt_register_password_repeat);
         edt_email = (EditText) this.findViewById(R.id.edt_register_email);
         
+        // Set an onlicklistener to the button
         btn_register.setOnClickListener(new View.OnClickListener() {
 			
         	
 			public void onClick(View v) {
+				// Check, if input is valid
 				if(!validateRegister()) {
 					Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_input), Toast.LENGTH_SHORT).show();
 					return;
 				}
 				
-				RegisterRequestTask req = new RegisterRequestTask(RegisterActivity.this);
-				
-				try {
-					req.execute(
-							new BasicNameValuePair(Constants.REGISTER_NAME, edt_name.getText().toString()),
-							new BasicNameValuePair(Constants.REGISTER_PW, PasswordEncryption.encrypt(edt_password.getText().toString())),
-							new BasicNameValuePair(Constants.REGISTER_EMAIL, edt_email.getText().toString()));
-				} catch (Exception e) {
-					Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
-				}
+				// Send a register task.
+				requestRegisterUser();
 			}
 		});
     }
     
-    @Override
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
     	case android.R.id.home:
+    		// Go back to Login
     		Intent intent = new Intent(this, LoginActivity.class);
     		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     		startActivity(intent);
@@ -91,24 +87,43 @@ public class RegisterActivity extends Activity implements RequestCallback {
 			Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
 		}
     	
-    	SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFERENCES,
-				MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(Constants.LOGIN_NAME, edt_name.getText().toString());
-		editor.putString(Constants.LOGIN_PASSWORD, edt_password.getText().toString());
-		
-		editor.commit();
+    	// Saves login data to shared preferences.
+    	saveToSharedPreferences();
 		
     	// New User has no vehicles. So create it first.
 		Intent intent = new Intent(RegisterActivity.this, NewVehicleActivity.class);
 		startActivity(intent);
 	}
     
+
 	@Override
 	public Context getContext() {
 		return this;
 	}
-    
+	
+	private void requestRegisterUser() {
+    	// Fire new register task.
+		RegisterRequestTask req = new RegisterRequestTask(RegisterActivity.this);
+		try {
+			req.execute(
+					new BasicNameValuePair(Constants.REGISTER_NAME, edt_name.getText().toString()),
+					new BasicNameValuePair(Constants.REGISTER_PW, PasswordEncryption.encrypt(edt_password.getText().toString())),
+					new BasicNameValuePair(Constants.REGISTER_EMAIL, edt_email.getText().toString()));
+		} catch (Exception e) {
+			Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private void saveToSharedPreferences() {
+		SharedPreferences prefs = getSharedPreferences(LoginActivity.PREFERENCES,
+				MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString(Constants.LOGIN_NAME, edt_name.getText().toString());
+		editor.putString(Constants.LOGIN_PASSWORD, edt_password.getText().toString());
+		
+		editor.commit();
+	}
+	
     private boolean validateRegister() {
     	String name = edt_name.getText().toString();
 		String pw = edt_password.getText().toString();
@@ -172,6 +187,8 @@ public class RegisterActivity extends Activity implements RequestCallback {
     				}
     				return;
     			}
+    			
+    			// Open the callback
     			callback.onRequestComplete(result);
 			} catch (Exception e) {
 				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();

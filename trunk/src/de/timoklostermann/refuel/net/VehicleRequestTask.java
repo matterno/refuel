@@ -32,11 +32,9 @@ public class VehicleRequestTask extends RequestTask {
 	@Override
 	protected void onPreExecute() {
 		this.progress = new ProgressDialog(callback.getContext());
-		if(callback instanceof SwipeActivity) {
-			progress.setMessage(callback.getContext().getString(R.string.vehicle_getting));
-		} else {
-			progress.setMessage(callback.getContext().getString(R.string.vehicle_saving));
-		}
+		
+		// TODO set message for saving a vehicle, updating a vehicle, etc.
+		progress.setMessage(callback.getContext().getString(R.string.vehicle_getting));
 		
 		progress.show();
 	}
