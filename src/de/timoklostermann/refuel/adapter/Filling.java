@@ -4,15 +4,18 @@ import java.util.Date;
 
 public class Filling implements Comparable<Filling> {
 	private Date date;
-	private String consupmtion;
-	private String price;
-	private String quantitiy;
+	private double distance;
+	private double price;
+	private double quantitiy;
+	private Boolean filledToTop;
+	private double consumptionToPrevious = 0;
 	
-	public Filling(Date date, String consumption, String price, String quantity) {
+	public Filling(Date date, double distance, double price, double quantity, Boolean filledToTop) {
 		this.date = date;
-		this.consupmtion = consumption;
+		this.distance = distance;
 		this.price = price;
 		this.quantitiy = quantity;
+		this.filledToTop = filledToTop;
 	}
 
 	public Date getDate() {
@@ -23,36 +26,52 @@ public class Filling implements Comparable<Filling> {
 		this.date = date;
 	}
 
-	public String getConsupmtion() {
-		return consupmtion;
+	public double getDistance() {
+		return distance;
 	}
 
-	public void setConsupmtion(String consupmtion) {
-		this.consupmtion = consupmtion;
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public String getQuantitiy() {
+	public double getQuantitiy() {
 		return quantitiy;
 	}
 
-	public void setQuantitiy(String quantitiy) {
+	public void setQuantitiy(double quantitiy) {
 		this.quantitiy = quantitiy;
+	}
+
+	public Boolean getFilledToTop() {
+		return filledToTop;
+	}
+
+	public void setFilledToTop(Boolean filledToTop) {
+		this.filledToTop = filledToTop;
+	}
+
+	public double getConsumptionToPrevious() {
+		return consumptionToPrevious;
+	}
+
+	public void setConsumptionToPrevious(double consumptionToPrevious) {
+		this.consumptionToPrevious = consumptionToPrevious;
 	}
 
 	@Override
 	public int compareTo(Filling another) {
 		if(this.getDate().after(another.getDate())) {
-			return -1;
-		} else if(this.getDate().before(another.getDate())) {
 			return 1;
+		} else if(this.getDate().before(another.getDate())) {
+			return -1;
 		} else {
 			return 0;
 		}

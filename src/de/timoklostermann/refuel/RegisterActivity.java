@@ -84,7 +84,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
     public void onRequestComplete(JSONObject obj) {
     	try {
 			if(!obj.getBoolean(Constants.JSON_SUCCESS)) {
-				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.register_error_user_found), Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_user_found), Toast.LENGTH_SHORT).show();
 				return;
 			}
 		} catch (JSONException e) {
@@ -99,7 +99,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
 		
 		editor.commit();
 		
-    	// TODO New User -> Create Vehicle first NewVehicleActivity.class
+    	// New User has no vehicles. So create it first.
 		Intent intent = new Intent(RegisterActivity.this, NewVehicleActivity.class);
 		startActivity(intent);
 	}
@@ -164,8 +164,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
     			progress.dismiss();
     		}
     		try {
-    			JSONObject obj = this.get();
-    			if(obj == null) {
+    			if(result == null) {
     				if(errorcode == Constants.ERROR_NO_CONNECTION) {
     					Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_no_connection), Toast.LENGTH_SHORT).show();
     				} else {
@@ -173,7 +172,7 @@ public class RegisterActivity extends Activity implements RequestCallback {
     				}
     				return;
     			}
-    			callback.onRequestComplete(obj);
+    			callback.onRequestComplete(result);
 			} catch (Exception e) {
 				Toast.makeText(RegisterActivity.this, getResources().getString(R.string.error_unexpected), Toast.LENGTH_SHORT).show();
 			}

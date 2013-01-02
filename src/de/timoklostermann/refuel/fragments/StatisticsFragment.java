@@ -1,7 +1,10 @@
 package de.timoklostermann.refuel.fragments;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 import de.timoklostermann.refuel.R;
 import de.timoklostermann.refuel.adapter.Filling;
@@ -80,7 +83,12 @@ public class StatisticsFragment extends Fragment {
 		getFillingsFromSharedPreferences();
 		StatisticsHelper stats = new StatisticsHelper(fillings);
 		
-		tv_consumpion_average.setText(stats.getAverageConsumption() + "");
+		NumberFormat format = NumberFormat.getNumberInstance(Locale.getDefault());
+		format.setMaximumFractionDigits(1);
+		
+		//TODO Correct Units!
+		
+		tv_consumpion_average.setText(format.format(stats.getAverageConsumption()) + "l/100km");
 		tv_consumpion_maximum.setText(stats.getMaximumConsumption() + "");
 		tv_consumpion_minimum.setText(stats.getMininmalConsumption() + "");
 		tv_consumpion_perYear.setText(stats.getConsumptionPerYear() + "");
@@ -108,8 +116,9 @@ public class StatisticsFragment extends Fragment {
     }
     
     private void getFillingsFromSharedPreferences() {
+    	// TODO Hardcoded for testing
     	fillings = new ArrayList<Filling>();
-    	fillings.add(new Filling(new Date(112,10,11),"7,9 l/100km","1,59 €/l", "37 l"));
-    	fillings.add(new Filling(new Date(112,11,01),"7,6 l/100km","1,63 €/l", "13 l"));
+    	fillings.add(new Filling(new Date(112,10,11),149500,1.59,13, true));
+    	fillings.add(new Filling(new Date(112,11,01),150137,1.63,37, true));
     }
 }

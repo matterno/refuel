@@ -5,8 +5,13 @@
         android:orderInCategory="200"
         android:showAsAction="never" />
     
+    <item android:id="@+id/menu_deleteVehicle"
+        android:title="@string/menu_deleteVehicle"
+        android:orderInCategory="300"
+        android:showAsAction="never" />
+    
     <item android:id="@+id/menu_logout"
         android:title="@string/menu_logout"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:showAsAction="never" />
 </menu>
