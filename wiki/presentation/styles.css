@@ -23,6 +23,17 @@ body {
   background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), to(rgb(190, 190, 190)));
 
   -webkit-font-smoothing: antialiased;
+  
+  color: #fff;
+  /*background-image: -moz-radial-gradient(50% 30% 90deg, circle, #0075ba 0%, #304160 600px);
+  background-image: -webkit-gradient(radial, 50% 50%, 200, 50% 50%, 600, from(#0075ba), to(#304160));
+  background-color: #0075ba;*/
+  /*background-image: -moz-radial-gradient(50% 30% 90deg, circle, #b1dfff 0%, #0c54ab 600px);
+  background-image: -webkit-gradient(radial, 50% 50%, 200, 50% 50%, 600, from(#b1dfff), to(#0c54ab));
+  background-attachment: fixed;*/
+  background-image: -moz-radial-gradient(50% 30% 90deg, circle, #f0b7a1 0%, #752201 600px);
+  background-image: -webkit-gradient(radial, 50% 50%, 200, 50% 50%, 600, from(#f0b7a1), to(#752201));
+  background-attachment: fixed;
 }
 
 .slides {
@@ -579,11 +590,11 @@ article.smaller q::after {
   color: rgb(127, 0, 127);
 }  
 
-#phonediv,#phonediv2 {
+#phonediv {
 	margin: 0px auto 0;
 	display: block;
-	width: 258px;
-	height: 429px;
+	width: 302px;
+	height: 502px;
 	padding: 15px 5px;
 	background-color: black;
 	border-radius: 10px;
@@ -611,8 +622,8 @@ article.smaller q::after {
 	transform:rotate(90deg) scale(1.4) translate(-40px,0);
 }
 .phoneInnerClass {
-	height: 427px;
-	width: 256px;
+	height: 500px;
+	width: 300px;
 	padding: 0;
 	margin: 0;
 	border: 1px solid gray;
@@ -621,8 +632,8 @@ article.smaller q::after {
 .mobilephonecontrol {
 	font-size: 17px;
 	position: absolute;
-	right: 60px;
-	top: 487px;
+	left: 200px;
+	bottom: 20px;
 }
 .mobilephonerotation {
 	font-size: 17px;

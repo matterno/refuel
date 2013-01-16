@@ -625,8 +625,8 @@ if (!window['_DEBUG'] && document.location.href.indexOf('?debug') !== -1) {
 var ipaddr;
 var imgParams = "vnnnnn";
 function phoneConnect() {
-	ipaddr = document.getElementById("ipaddr").value;
-	document.getElementById("ipaddr").disabled = true;
+	//ipaddr = document.getElementById("ipaddr").value;
+	//document.getElementById("ipaddr").disabled = true;
 	document.getElementById("pconn").disabled = true;
 	document.getElementById("pdisconn").disabled = false;
 	var innerClassElements = document.querySelectorAll(".phoneInnerClass");
@@ -670,7 +670,7 @@ function phoneRotate(orientation) {
 	}
 }
 function phoneRefresh() {
-	var link = "http://matterno:Timo13@"+ipaddr+"/screenshot.jpg?"+imgParams+(new Date()).getTime();
+	var link = "http://praesi:praesi@webkey.cc/matternonexus4/screenshot.jpg?"+imgParams+(new Date()).getTime();
 	//var innerClassElements = document.querySelectorAll(".phoneInnerClass");
 	//for(var i=0; i<innerClassElements.length; i++){
 	//	innerClassElements[i].setAttribute("src", link);
@@ -690,7 +690,7 @@ function phoneDisconnect() {
 	}
 	//document.getElementById("phone").onload = null;
 	//document.getElementById("phone").setAttribute("src", "images/black.png");
-	document.getElementById("ipaddr").disabled = false;
+	//document.getElementById("ipaddr").disabled = false;
 	document.getElementById("pdisconn").disabled = true;
 	document.getElementById("pconn").disabled = false;
 }
